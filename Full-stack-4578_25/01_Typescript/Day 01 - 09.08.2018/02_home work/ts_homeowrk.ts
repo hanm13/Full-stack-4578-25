@@ -256,7 +256,7 @@ console.log("Count of zero numbers in array1: ", getCountOfZeroNumbersInArray(ar
 */
 
 function printMaxOfArrayPrintNumbersOfMaxNumber() :void {
-   let arr2: number[] = new Array<number>(5);
+   let arr2: number[] = new Array<number>(20);
 
     for (let i = 0; i < arr2.length; i++) {
 
