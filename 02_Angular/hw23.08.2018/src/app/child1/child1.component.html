@@ -1,0 +1,15 @@
+<div id="moviesPanel">
+
+  <div id="moviesListTitle">
+
+    <h1>Movie List</h1>
+
+  </div>
+
+  <ol class="rounded-list">
+
+    <li *ngFor="let movie of movies" (click)="onMovieClick(movie)"><h2>{{movie.movie_name}}</h2></li>
+
+  </ol>
+
+</div>

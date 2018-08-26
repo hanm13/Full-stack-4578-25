@@ -1,0 +1,24 @@
+<div id="selectedMoviePanel" *ngIf="selectedMovie;">
+
+  <h1>Selected Movie: {{selectedMovie.movie_name}}</h1>
+
+  <table border="1">
+    <tr>
+      <th>
+        Price:
+      </th>
+      <th>
+        Date:
+      </th>
+    </tr>
+    <tr>
+      <th>
+        {{selectedMovie.price}}
+      </th>
+      <th>
+        {{selectedMovie.movie_date}}
+      </th>
+    </tr>
+  </table>
+
+</div>
