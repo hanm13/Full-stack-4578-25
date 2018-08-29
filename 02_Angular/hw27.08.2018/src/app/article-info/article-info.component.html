@@ -1,0 +1,20 @@
+<div *ngIf="chosenArticleArr.chosen != -1">
+
+  (With variable in the interpolation):
+
+  <p>Type: {{articlesInfoArr[chosenArticleArr.chosen].article_type}}</p>
+  <p>Score {{articlesInfoArr[chosenArticleArr.chosen].score}}</p>
+  <p>Authors: {{articlesInfoArr[chosenArticleArr.chosen].author_display}}</p>
+
+  <!-- OR (With function in the interpolation):
+
+  <hr>
+  <p>Type: {{getChosenArticleInfo().article_type}}</p>
+  <p>Score {{getChosenArticleInfo().score}}</p>
+  <p>Authors: {{getChosenArticleInfo().author_display}}</p>
+
+  -->
+
+
+
+</div>

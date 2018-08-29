@@ -1,0 +1,13 @@
+<table border="1">
+
+  <tr>
+
+  <td *ngFor="let article of articlesList, let i = index">
+
+    <a href="#" (click)="updateChosenArticle(i)">{{article.article_type}}</a>
+
+  </td>
+
+  </tr>
+
+</table>
