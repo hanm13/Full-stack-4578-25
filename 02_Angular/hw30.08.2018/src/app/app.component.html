@@ -1,0 +1,26 @@
+<h1>Choose page: </h1>
+
+<select (change)="updateUsers($event)">
+  <option value="999">None</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
+
+<div *ngIf="localData && localData.users && localData.users.data.length > 0">
+  <table border="1">
+    <tr>
+      <th>id</th>
+      <th>first name</th>
+      <th>last name</th>
+      <th>avatar</th>
+    </tr>
+    <tr *ngFor="let user of localData.users.data">
+      <td>{{user.id}}</td>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td><img [src]="user.avatar" /></td>
+    </tr>
+  </table>
+</div>
