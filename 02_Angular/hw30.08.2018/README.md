@@ -1,3 +1,3 @@
 # Selectable page:
 
-![project](/product.png)
+![project](./product.png)
