@@ -1,0 +1,44 @@
+<form [formGroup]="myForm">
+  <div>
+      <label>Name:</label>
+      <input #name_input formControlName="userName" />
+      <p>{{myForm.controls.userName.errors?.err}}</p>
+  </div>
+
+
+  <div>
+      <label>ID:</label>
+      <input #id_input formControlName="identity" />
+      <p>{{myForm.controls.identity.errors?.err}}</p>
+  </div>
+
+  <input type="submit" value="Add" [disabled]="myForm.invalid" (click)="submitPerson(name_input.value,id_input.value )" />
+
+</form>
+
+
+<div *ngIf="person?.length > 0">
+
+<table border="1">
+
+  <tbody>
+
+    <tr>
+
+      <th>Name</th>
+      <th>ID</th>
+
+    </tr>
+
+    <tr *ngFor="let x of person">
+      
+      <td>{{x.name}}</td>
+      <td>{{x.person_identity}}</td>
+
+    </tr>
+
+  </tbody>
+
+</table>
+
+</div>
