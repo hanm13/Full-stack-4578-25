@@ -36,18 +36,39 @@ app.put("/api/users", (req, res) => {
 
     let usersArr = JSON.parse(fs.readFileSync("./users.json"));
     //pointerToUser points to the user with the requested name
-    let pointerToUser = usersArr.find(element => element.name == req.query.name);
+    let userIndex = -1;
 
-    if (pointerToUser != -1) {
+    for (let index = 0; index < usersArr.length; index++) {
+
+        if(usersArr[index].name == req.query.name){userIndex = index;}
+        
+    }
+
+    if (userIndex != -1) {
+
+        try{
+
+        let updatedUser = new User.UserClassPointer(); // We need the class rules!
+
         for (key in req.body) {
-            pointerToUser["_"+key] = req.body[key]; // Body keys are not equal to the userArr[index] keys so we have to add '_' before.
+            updatedUser[key] = req.body[key];
         }
+
+        console.log(usersArr);
+        usersArr[userIndex] = updatedUser;
+        console.log(usersArr);
 
         //save the updates to the file
         fs.writeFileSync("users.json", JSON.stringify(usersArr));
 
         res.status(200);
         res.send("User edited in the file");
+
+        } catch (e) {
+            res.status(400);
+            res.send(e.message);
+        }
+
     } else {
         res.status(400);
         res.send("No such User in the file");
