@@ -23,7 +23,7 @@ if (!fs.existsSync("./assets.json")) {
 
 // get all assets
 app.get("/api/assets", (req, res) => {
-assets
+
     let assetsArr = JSON.parse(fs.readFileSync("./assets.json"));
     res.status(200);
     res.send(assetsArr);
@@ -65,11 +65,14 @@ app.post("/api/assets", (req, res) => {
 
         console.log("newAsset", newAsset);
 
+        // filter for saving the object without the "_" in the JSON file.
+
         let filteredNewPerson = {};
          for (key in req.body) {
 
             filteredNewPerson[key] = newAsset['_'+key];
          }
+         filteredNewPerson.id = newAsset.id;
 
         // Math.random should be unique because of its seeding algorithm.
         // Convert it to base 36 (numbers + letters), and grab the first 9 characters
@@ -93,7 +96,17 @@ app.post("/api/assets", (req, res) => {
 app.delete("/api/assets", (req, res) => {
 
     let assetsArr = JSON.parse(fs.readFileSync("./assets.json"));
-    let filterAssetsArr = assetsArr.filter(element => element.name != req.query.name)
+
+    console.log(req.query);
+
+    console.log("---req.query.id---",req.query.id);
+
+    console.log("---assetsArr---",assetsArr);
+
+
+    let filterAssetsArr = assetsArr.filter(element => element.id != req.query.id)
+
+    console.log("---filterAssetsArr---",filterAssetsArr);
 
     //if the filtered array is shorter than the original array - we moved a user (delete success)
     //else - send an error
@@ -108,7 +121,7 @@ app.delete("/api/assets", (req, res) => {
     } 
     else {
         res.status(400);
-        res.send("No such user in the file");
+        res.send("No asset user in the file");
     }
 
 });
@@ -119,11 +132,11 @@ console.log("Server is running on port 4444")
 
 /*
 
+POST:
+curl -v -X POST -H "Content-type: application/json" -d  "{\"type\": \"Apartment\",\"roomsNumber\": 5,\"price\": \"5000000\", \"fullAddress\": [ \"Tel Aviv\", \"Ramat Aviv\", 5 ] }" localhost:4444/api/assets
 
-CURL testing post command: curl -v -X POST -H "Content-type: application/json" -d "{ \"type\": \"Apartment\", \"roomsNumber\": 5, \"price\": 5000000, \"fullAddress\": [ \"city\": \"Tel Aviv\", \"street\": \"Ramat Aviv\", \"streetNumber\": 5 ] }" localhost:4444/api/assets
-
-CURL testing post command: curl -v -X POST -H "Content-type: application/json" -d  "{\"type\": \"Apartment\",\"roomsNumber\": 5,\"price\": \"5000000\", \"fullAddress\": [ \"Tel Aviv\", \"Ramat Aviv\", 5 ] }" localhost:4444/api/assets
-
+DELETE:
+curl -v -X DELETE -H "Content-type: application/json" -d  "" localhost:4444/api/assets?id="s22afylim"
 
 */
 

@@ -56,26 +56,13 @@ class Asset {
 
         let errors = [];
 
-        console.log("length", values_obj.length);
-
         if( values_obj.length == 3){ // Will check if the values_obj has all the properties
 
             values_obj = {city : values_obj[0], street:values_obj[1], streetNumber:values_obj[2] }; // filter
 
-            console.log(values_obj);
-
-            console.log("city" ,values_obj.city);
-            console.log("street" ,values_obj.street);
-            console.log("street number" ,values_obj.streetNumber);
-
             // city: values_obj.city
             // street: values_obj.street
             // street number: values_obj.streetNumber
-
-
-            console.log("values length if", Object.keys(values_obj).length);
-
-            console.log(isNaN( values_obj.city));
 
             if (this.isValidName( values_obj.city)){ // We have the right property with the right validation
 
@@ -109,9 +96,6 @@ class Asset {
             errors.push("You must send an object of asset address that will include: city:string, street: string, streetNumber: integer")
 
         }
-
-        console.log(errors)
-
 
         if( errors.length > 0){
 
