@@ -123,7 +123,7 @@ DELETE:
 curl -v -X DELETE -H "Content-type: application/json" -d  "" localhost:4444/api/assets?id="s22afylim"
 
 GET:
-curl -v -X GET -H "Content-type: application/json" -d  "" localhost:4444/api/assets"
+curl -v -X GET -H "Content-type: application/json" -d  "" localhost:4444/api/assets
 
 
 */
