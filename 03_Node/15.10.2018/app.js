@@ -113,8 +113,17 @@ app.post("/api/users", (req, res) => {
             // we get each key from the body and update the newUser object.
             newUser[key] = req.body[key];
         }
+        
+        let filteredNewPerson = {};
 
-        usersArr.push(newUser);
+        for (key in req.body) {
+
+            //        property:age   property: _age
+            filteredNewPerson[key] = newUser['_'+key];
+
+        }
+
+        usersArr.push(filteredNewPerson);
 
         fs.writeFileSync("users.json", JSON.stringify(usersArr));
         res.status(201);
