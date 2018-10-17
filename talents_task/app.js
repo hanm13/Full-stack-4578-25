@@ -36,8 +36,6 @@ app.post("/api/assets", (req, res) => {
 
     let assetsArr = JSON.parse(fs.readFileSync("./assets.json"));
 
-    console.log(req.body);
-
     if(!req.body["type"] || !req.body["roomsNumber"] || !req.body["price"] || !req.body["fullAddress"] || !req.body["fullAddress"][0] || !req.body["fullAddress"][1] || !req.body["fullAddress"][2] ){
         res.status(400);
         res.send(`You must send JSON object as this example: { "type": "Apartment", "roomsNumber": 5, "price": 5000000, "fullAddress": [ "Tel Aviv", "Ramat Aviv", 5 ] }`);
@@ -51,19 +49,14 @@ app.post("/api/assets", (req, res) => {
 
         // substr start from 2 so we are after the decimal.
         newAsset.id = Math.random().toString(36).substr(2, 9);
-        console.log("req.body", req.body);
 
         // We running on the keys we get from the body request and set properties of the newAsset object according to the keys.
 
         for (key in req.body) {
 
-            console.log("body key:", key);
-
             // we get each key from the body and update the newAsset object.
             newAsset[key] = req.body[key];
         }
-
-        console.log("newAsset", newAsset);
 
         // filter for saving the object without the "_" in the JSON file.
 
@@ -97,16 +90,7 @@ app.delete("/api/assets", (req, res) => {
 
     let assetsArr = JSON.parse(fs.readFileSync("./assets.json"));
 
-    console.log(req.query);
-
-    console.log("---req.query.id---",req.query.id);
-
-    console.log("---assetsArr---",assetsArr);
-
-
     let filterAssetsArr = assetsArr.filter(element => element.id != req.query.id)
-
-    console.log("---filterAssetsArr---",filterAssetsArr);
 
     //if the filtered array is shorter than the original array - we moved a user (delete success)
     //else - send an error
