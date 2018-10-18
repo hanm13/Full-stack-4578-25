@@ -85,14 +85,14 @@ app.post("/api/assets", (req, res) => {
 });
 
 
-//delete user
+//delete asset
 app.delete("/api/assets", (req, res) => {
 
     let assetsArr = JSON.parse(fs.readFileSync("./assets.json"));
 
     let filterAssetsArr = assetsArr.filter(element => element.id != req.query.id)
 
-    //if the filtered array is shorter than the original array - we moved a user (delete success)
+    //if the filtered array is shorter than the original array - we moved a asset (delete success)
     //else - send an error
     if (filterAssetsArr.length < assetsArr.length) {
         //save the updates to the file
@@ -105,7 +105,7 @@ app.delete("/api/assets", (req, res) => {
     } 
     else {
         res.status(400);
-        res.send("No asset user in the file");
+        res.send("No asset in the file");
     }
 
 });
