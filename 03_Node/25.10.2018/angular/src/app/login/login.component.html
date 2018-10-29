@@ -1,0 +1,19 @@
+<form [formGroup]="myForm" #loginForm (ngSubmit)="submitLogin(input_username.value, input_password.value)">
+
+        <div>
+            <label>userName:</label>
+            <input formControlName="userName" #input_username />
+            <p>{{myForm.controls.userName.errors?.err}}</p>
+        </div>
+
+
+        <div>
+            <label>userPassword:</label>
+            <input formControlName="userPassword" #input_password />
+            <p>{{myForm.controls.userPassword.errors?.err}}</p>
+        </div>
+
+
+        <input type="submit" value="Login" [disabled]="myForm.invalid" />
+
+    </form>
