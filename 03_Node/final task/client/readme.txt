@@ -1,0 +1,1 @@
+Build the production mode using the cmd command: ng build --prod --build-optimizer

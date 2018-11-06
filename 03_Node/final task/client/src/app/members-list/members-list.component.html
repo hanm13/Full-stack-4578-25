@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Our members:</h2>
+
+    <hr/>
+    <div class="row">
+
+        <div class="col-md-3 book-container" *ngFor="let member of localUserData.members">
+            <div class="thumbnail">
+
+                <div class="caption">
+
+                  <p> Name: {{member.name}} </p>
+                  <p> Last name: {{member.lastName}} </p>
+
+                  <div *ngIf="user.userName != 'Guest'">
+                      <p> User ID: {{member._id}} </p>
+                      <p> User Name: {{member.userName}} </p>
+                      <p> Email: {{member.email}} </p>
+                  </div>
+
+
+                  <div *ngIf="user.userName != 'Guest'">
+
+                    <button id ="editMemberBtn" class="btn btn-primary btn-left" (click)="editMember(member)">Edit</button>
+                    <button id ="deleteMemberBtn" class = "btn btn-primary btn-right" (click)="deleteMember(member._id)">Delete</button>
+
+                  </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

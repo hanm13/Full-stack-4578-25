@@ -1,0 +1,25 @@
+// Create new member
+
+POST:
+curl -v -X POST -H "Content-type: application/json" -d  "{\"name\": \"Chen\",\"lastName\": \"Magled\",\"userName\": \"Magled\",\"password\": \"123456\" }" localhost:6000/api/members
+
+// Delete member
+
+DELETE:
+curl -v -X DELETE -H "Content-type: application/json" -d  "" localhost:6000/api/members/?id=5be151a04c04e42a442b311d
+
+// get all members
+
+GET:
+curl -v -X GET -H "Content-type: application/json" -d  "" localhost:6000/api/members
+
+// get member by mongo _id
+
+GET:
+curl -v -X GET -H "Content-type: application/json" -d  "" localhost:6000/api/member/5be152177b780120b85ccd7d
+
+// Update member
+
+PUT:
+curl -v -X PUT -H "Content-type: application/json" -d  "{\"name\": \"Chen\",\"lastName\": \"Magled\",\"userName\": \"Magled\",\"password\": \"12345678\" }" localhost:6000/api/members/?id=5be152177b780120b85ccd7d
+
