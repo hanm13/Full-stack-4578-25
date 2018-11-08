@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser"); 
 const path=require('path');
 const mongoose = require("mongoose");
-const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -125,24 +124,27 @@ app.get("/home",(req,res)=>{
     res.sendFile(path.join(__dirname+"/views/index.html"));
 });
 
+
+// Member login
+
 app.get("/api/login", (req, res) => {
 
     console.log("test");
 
 
-    let headerUserNameVal = req.header('xx-auth-u');
-    let headerPasswordVal = req.header('xx-auth-p');
+    let headerUserNameVal = req.header('xx-auth-u'); // we get the username through the header.
+    let headerPasswordVal = req.header('xx-auth-p'); // we get the pasword through the header.
 
     console.log(headerUserNameVal);
 
 
-    if (headerUserNameVal && headerUserNameVal != "" && headerPasswordVal && headerPasswordVal != "") {
+    if (headerUserNameVal && headerUserNameVal != "" && headerPasswordVal && headerPasswordVal != "") { // we check if we have any content inside the header
 
-        MembersCollection.findOne({
+        MembersCollection.findOne({ // we search for the user with the headers info
 
                 "password": headerPasswordVal,
                 "userName": headerUserNameVal
-            }).then(currentUser => {
+            }).then(currentUser => { // when we find one we can act and send the user info as response.
 
                 if(currentUser != null){
                     console.log(currentUser);
@@ -150,7 +152,7 @@ app.get("/api/login", (req, res) => {
                     res.status(200).send(currentUser)
                 }else{
 
-                    res.status(401).send();
+                    res.status(401).send(); // if we did not find user with the info we will send status 401 (unauthorized)
 
                 }
 
@@ -193,5 +195,10 @@ curl -v -X GET -H "Content-type: application/json" -d  "" localhost:7200/api/mem
 PUT:
 curl -v -X PUT -H "Content-type: application/json" -d  "{\"name\": \"Chen1\",\"lastName\": \"Magled1\",\"userName\": \"hanm13\",\"password\": \"12345678\",\"email\": \"tttttt059@gmail.com\" }" localhost:7200/api/members/?id=5be1654ea18b5a3a64db4b3d
 
+
+LOGIN:
+
+GET:
+curl -v -X GET -H "Content-type: application/json" -H "xx-auth-u: hanm131" -H "xx-auth-p: 123456" -d  "" localhost:7200/api/login
 
 */

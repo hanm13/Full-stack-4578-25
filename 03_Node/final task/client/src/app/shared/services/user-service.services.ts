@@ -61,4 +61,16 @@ export class UserService {
 
     }
 
+    editUser(editedUser: User): void {
+
+      console.log(editedUser);
+
+      const apiUrl = `http://localhost:7200/api/members/?id=${editedUser._id}`;
+
+      this.myHttpClient.put(apiUrl, editedUser)
+      .subscribe((resp) => {
+          this.getMembersList();
+      });
+  }
+
 }

@@ -12,12 +12,14 @@ import { HomeComponent } from './home/home.component';
 import { UserService } from './shared/services/user-service.services';
 import { AccountComponent } from './account/account.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { EditMemberComponent } from './edit-member/edit-member.component';
 
 
 const appRoutes: Routes = [
 
     { path: 'home', component: HomeComponent },
     { path: 'members', component: MembersListComponent },
+    { path: 'members/edit/:id', component: EditMemberComponent},
     { path: 'account', component: AccountComponent },
     // default path - will redirect the current path to 'home'
     { path: '',
@@ -36,6 +38,7 @@ const appRoutes: Routes = [
     MembersListComponent,
     HomeComponent,
     AccountComponent,
+    EditMemberComponent,
   ],
   imports: [
     BrowserModule,
