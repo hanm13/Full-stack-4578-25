@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>Our books:</h2>
+
+
+    <div class="text-center">
+        <hr/>
+        <div class="input-group">
+            <input type="text" class="form-control" #myInput placeholder="Enter book name" />
+            <span class="input-group-addon" (click)="searchBooks(myInput.value)">Search</span>
+        </div>
+
+    </div>
+    <hr/>
+    <div class="row">
+
+        <div class="col-md-3 book-container" *ngFor="let book of localBookData.items">
+            <div class="thumbnail">
+
+                <div class="caption">
+
+                    <h2>{{shortTitle(book.volumeInfo.title)}}</h2>
+                    <hr/>
+
+                    <img [src]="book.volumeInfo.imageLinks?.thumbnail" [title]="book.volumeInfo.title" />
+                    <p>language: {{book.volumeInfo.language}}</p>
+                    <p>authors:
+                        <span *ngIf="book.volumeInfo.authors">{{book.volumeInfo.authors[0]}}</span>
+                        <span *ngIf="!book.volumeInfo.authors">unknown</span>
+                    </p>
+                    <p>published date: {{ (book.volumeInfo.publishedDate)? book.volumeInfo.publishedDate : 'unknown' }}
+                    </p>
+                    <p *ngIf="user.userName!='Guest'">
+                        <button class="btn btn-primary btn-right" (click)="addToCart(book._id)">Add to Cart</button>
+                    </p>
+                    <p>
+                        <a routerLink="/book" class="btn btn-primary btn-left" (click)="setSelectedBook(book)">Show details</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+        <h2>Your cart:</h2>
+     
+        <hr/>
+        <div class="row">
+    
+            <div class="col-md-3 book-container" *ngFor="let book of user.cart">
+                <div class="thumbnail">
+    
+                    <div class="caption">
+    
+                        <h2>{{shortTitle(book.volumeInfo.title)}}</h2>
+                        <hr/>
+    
+                        <img [src]="book.volumeInfo.imageLinks?.thumbnail" [title]="book.volumeInfo.title" />
+                        <p>language: {{book.volumeInfo.language}}</p>
+                        <p>authors:
+                            <span *ngIf="book.volumeInfo.authors">{{book.volumeInfo.authors[0]}}</span>
+                            <span *ngIf="!book.volumeInfo.authors">unknown</span>
+                        </p>
+                        <p>published date: {{ (book.volumeInfo.publishedDate)? book.volumeInfo.publishedDate : 'unknown' }}
+                        </p>
+
+                        <div>
+    
+                                <button class="btn btn-primary btn-right" (click)="removeFromCart(book._id)">Remove</button>
+                 
+              
+                                <a routerLink="/book" class="btn btn-primary btn-left" (click)="setSelectedBook(book)">Show details</a>
+                      
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>

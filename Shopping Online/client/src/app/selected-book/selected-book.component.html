@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="panel panel-default" *ngIf="selectedBook.selected">
+        <div class="panel-heading">{{selectedBook.selected.volumeInfo.title}}</div>
+        <div class="panel-body">
+
+
+            <p> authors: {{selectedBook.selected.volumeInfo.authors}}</p>
+            <p> publishedDate: {{selectedBook.selected.volumeInfo.publishedDate}}</p>
+            <p> description: {{selectedBook.selected.volumeInfo.description}}</p>
+            <p> pageCount: {{selectedBook.selected.volumeInfo.pageCount}}</p>
+            <p> language {{selectedBook.selected.volumeInfo.language}}</p>
+            <p> subtitle {{selectedBook.selected.volumeInfo.subtitle}}</p>
+
+            <img [src]="selectedBook.selected.volumeInfo.imageLinks.thumbnail" />
+
+        </div>
+    </div>
+
+
+    <div class="panel panel-default" *ngIf="!selectedBook.selected">
+        <div class="panel-heading">No Book is selected</div>
+        <div class="panel-body">
+
+            <p>Please go to book list and select a book to view the details</p>
+
+        </div>
+    </div>
+
+    <a routerLink="/books" class="btn btn-primary">Back to list</a>
+
+</div>

@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <img src=".\assets\images\logo.png"/>
+            <span id="profile">Welcome {{user?.userName}}</span>
+        </div>
+        <div id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                <li>
+                    <a routerLink="/home">HOME</a>
+                </li>
+                <li>
+                    <a routerLink="/books">BOOKS</a>
+                </li>
+
+                <li *ngIf="user.userName!='Guest'">
+                    <a routerLink="/cart">CART</a>
+                </li>
+
+                <li>
+                    <a routerLink="/account">ACCOUNT</a>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+</nav>
