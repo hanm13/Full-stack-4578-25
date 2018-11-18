@@ -52,8 +52,6 @@ let init = (app) => {
     // Get products by category ID
     app.get("/api/products/category/:q", (req, res) => {
 
-        console.log(req.params.q)
-
         product.ProductModel.find({"categoryId":req.params.q})
         .then(products => {
             res.status(200).send(JSON.stringify({"items":products}));
@@ -63,13 +61,15 @@ let init = (app) => {
 
     // Update product by ID
 
-    app.put("/api/products/:q", (req, res) =>{
+    app.put("/api/products/:q", managerMiddlware.middleware, (req, res) =>{
 
-        product.ProductModel.findOne({_id: req.query.id})
+        product.ProductModel.findOne({_id: req.params.q})
         .then(product => {
+
             product.name = req.body.name;
             product.price = req.body.price;
             product.categoryId = req.body.categoryId;
+            product.imageAddress = req.body.imageAddress;
             product.save();
             res.status(200).send(product);
         })
@@ -189,5 +189,44 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 < Connection: keep-alive
 <
 {"_id":"5bf1bfa400098551e8e25c01","name":"Yotvata1 Milk","categoryId":"5bf1b03f8052e7676cc23b3f1","price":15,"imageAddress":"test","__v":0}* Connection #0 to host localhost left intact
+
+
+____
+
+Edit product - Put Request
+
+Product: Yotvata Milk
+_id: 5bf1bfa400098551e8e25c01
+
+PUT - localhost:6200/api/products/:q
+
+curl -v -X PUT -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"name\":\"Yotvata Milk\",\"price\": 18,\"imageAddress\":\"test\",\"categoryId\": \"5bf1b03f8052e7676cc23b3f1\"}" localhost:6200/api/products/5bf1bfa400098551e8e25c01
+
+
+response:
+
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 6200 (#0)
+> PUT /api/products/5bf1bfa400098551e8e25c01 HTTP/1.1
+> Host: localhost:6200
+> User-Agent: curl/7.55.1
+> Content-type: application/json
+> xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8
+> Content-Length: 99
+>
+* upload completely sent off: 99 out of 99 bytes
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 138
+< ETag: W/"8a-v1U5JSeqCCgNd/FWKC0WwkvQKVE"
+< Date: Sun, 18 Nov 2018 19:47:35 GMT
+< Connection: keep-alive
+<
+{"_id":"5bf1bfa400098551e8e25c01","name":"Yotvata Milk","categoryId":"5bf1b03f8052e7676cc23b3f1","price":18,"imageAddress":"test","__v":0}* Connection #0 to host localhost left intact
 
 */
