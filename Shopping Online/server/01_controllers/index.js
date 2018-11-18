@@ -8,12 +8,28 @@ const path=require('path');
 const index = require('./../00_models/index');
 
 // Requires (from current folder - to add controllers to our express app):
-const book=require('./book');
+const product=require('./product');
 const user=require('./user');
+const cities=require('./cities');
+const category=require('./category');
 
 
 // Create express app:
 const app = express();
+
+/* CORS */
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, xx-auth');
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+        res.status(200).end();
+    }
+    else {
+        next();
+    }
+});
 
 // Use middlewares (app level):
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,13 +37,14 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname+"/../02_views"))); 
 
 
-app.get("/bookStore",(req,res)=>{   //angular routing
+app.get("/ShoppingOnline",(req,res)=>{   //angular routing
     res.sendFile(path.join(__dirname+"/../02_views/index.html"));
 });
 
-book.init(app);
+product.init(app);
 user.init(app);
+cities.init(app);
+category.init(app);
 
-
-app.listen(process.env.PORT || 6000, ()=>{console.log("ok")})
+app.listen(process.env.PORT || 6200, ()=>{console.log("ok")})
 module.exports={app};

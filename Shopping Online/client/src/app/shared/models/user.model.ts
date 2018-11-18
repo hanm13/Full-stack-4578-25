@@ -1,10 +1,10 @@
-import { Book } from "./book.model";
-
 export interface User{
+    personID?: string;
     firstName?: string;
     lastName?: string;
     userName: string;
     password?: string;
-    token?:string;
-    cart?:Book[];
+    city?: string;
+    street?: string;
+    token?: string;
 }

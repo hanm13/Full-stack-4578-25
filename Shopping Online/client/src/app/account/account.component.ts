@@ -1,46 +1,50 @@
-import { Component, OnInit } from "@angular/core";
-import { UserService } from "../shared/services/user-service.services";
-import { User } from "../shared/models/user.model";
-import { FormGroup, FormControl, ValidatorFn } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../shared/services/user-service.services';
+import { User } from '../shared/models/user.model';
+import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
 
 @Component({
-  selector: "app-account",
-  templateUrl: "./account.component.html",
-  styleUrls: ["./account.component.css"]
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  //----------------PROPERTIRS-------------------
+  // ----------------PROPERTIRS-------------------
   loginForm: FormGroup;
   registerForm: FormGroup;
-  state: string = "login";
+  state = 'login';
   user: User;
 
   constructor(private myUserService: UserService) {
 
     this.user = this.myUserService.currentUser;
 
-    let loginGroupConfig = {
-      userName: this.getFormControl(2,15,"user name"),
-      userPassword: this.getFormControl(5,10,"password")
+    const loginGroupConfig = {
+      userName: this.getFormControl(2, 15, 'user name'),
+      userPassword: this.getFormControl(5, 10, 'password')
     };
 
-    
-    let registerGroupConfig = {
-        userName: this.getFormControl(2,15,"user name"),
-        userPassword: this.getFormControl(5,10,"password"),
-        firstName:this.getFormControl(2,15,"first name"),
-        lastName:this.getFormControl(2,15,"last name")
-    }
+
+    const registerGroupConfig = {
+        personID: this.getFormControl(9, 9, 'person ID'),
+        userName: this.getFormControl(2, 15, 'user name'),
+        userPassword: this.getFormControl(5, 10, 'password'),
+        firstName: this.getFormControl(2, 15, 'first name'),
+        lastName: this.getFormControl(2, 15, 'last name'),
+        city: this.getFormControl(99, 99, 'city'),
+        street: this.getFormControl(99, 99, 'street')
+
+    };
 
     this.loginForm = new FormGroup(loginGroupConfig);
-    this.registerForm=new FormGroup(registerGroupConfig);
+    this.registerForm = new FormGroup(registerGroupConfig);
   }
 
-  getFormControl(min,max,label){
-      return new FormControl("testt",[
+  getFormControl(min, max, label) {
+      return new FormControl('testt', [
         f => (!f.value && !f.pristine ? { err: `${label} is required` } : null),
-        f => f.value && f.value.length >= max ? { err: `${label} is max ${max} chars` }: null,
-        f =>f.value && f.value.length < min ? { err: `${label} is min ${min} chars` } : null
+        f => f.value && f.value.length > max ? { err: `${label} is max ${max} chars` } : null,
+        f => f.value && f.value.length < min ? { err: `${label} is min ${min} chars` } : null
       ]);
   }
 
@@ -49,28 +53,31 @@ export class AccountComponent implements OnInit {
   }
 
   loginUser() {
-      console.log( this.loginForm.value)
     this.myUserService.loginUser({
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.userPassword
     });
     this.loginForm.reset();
 
-    
+
   }
   registerUser() {
     this.myUserService.registerUser({
+      personID: this.registerForm.value.personID,
       firstName: this.registerForm.value.firstName,
       lastName: this.registerForm.value.lastName,
       userName: this.registerForm.value.userName,
-      password: this.registerForm.value.userPassword
+      password: this.registerForm.value.userPassword,
+      city: this.registerForm.value.city,
+      street: this.registerForm.value.street
+
     });
 
     this.registerForm.reset();
   }
 
   logout() {
-    this.myUserService.currentUser.userName = "Guest";
+    this.myUserService.currentUser.userName = 'Guest';
     this.myUserService.currentUser.token = undefined;
   }
   ngOnInit() {}

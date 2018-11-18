@@ -28,9 +28,31 @@ let userSchema = new mongoose.Schema(
             minlength: 64,
             maxlength: 64
         },
-        cart: {
+        personID: {
+            type: String,
+            required: true,
+            unique: true,
+            minlength: 9,
+            maxlength: 9
+        },
+        city: {
+            type: String,
+            required: true,
+            minlength: 2,
+        },
+        street: {
+            type: String,
+            required: true,
+            minlength: 2
+        },
+        role: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+        /*cart: {
             type: []
-        }
+        }*/
     }
 );
 
