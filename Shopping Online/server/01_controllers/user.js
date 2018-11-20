@@ -149,16 +149,6 @@ curl -v -X POST -H "Content-type: application/json" -d  "{\"firstName\":\"Bob\",
 
 Response:
 
-Note: Unnecessary use of -X or --request, POST is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6000 (#0)
-> POST /api/users/validateRegister HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-> Content-type: application/json
-> Content-Length: 195
->
 * upload completely sent off: 195 out of 195 bytes
 < HTTP/1.1 401 Unauthorized
 < X-Powered-By: Express
@@ -182,16 +172,6 @@ Response:
 __
 
 
-Note: Unnecessary use of -X or --request, POST is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6000 (#0)
-> POST /api/users/validateRegister HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-> Content-type: application/json
-> Content-Length: 196
->
 * upload completely sent off: 196 out of 196 bytes
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
@@ -211,15 +191,6 @@ CURL : curl -v -X GET -H "xx-auth: 36bbe50ed96841d10443bcb670d6554f0a34b761be67e
 
 Response
 
-Note: Unnecessary use of -X or --request, GET is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6200 (#0)
-> GET /api/users HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-> xx-auth: 36bbe50ed96841d10443bcb670d6554f0a34b761be67ec9c4a8ad2c0c44ca42cBobB
->
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *

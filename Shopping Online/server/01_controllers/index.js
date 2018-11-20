@@ -12,6 +12,8 @@ const product=require('./product');
 const user=require('./user');
 const cities=require('./cities');
 const category=require('./category');
+const cart=require('./cart');
+const cartItems=require('./cartitem');
 
 
 // Create express app:
@@ -45,6 +47,9 @@ product.init(app);
 user.init(app);
 cities.init(app);
 category.init(app);
+cart.init(app);
+cartItems.init(app);
+
 
 app.listen(process.env.PORT || 6200, ()=>{console.log("ok")})
 module.exports={app};

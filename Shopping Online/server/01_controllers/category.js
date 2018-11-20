@@ -36,13 +36,6 @@ CURL : curl -v -X GET localhost:6200/api/categories
 
 Response:
 
-Note: Unnecessary use of -X or --request, GET is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6200 (#0)
-> GET /api/categories HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *
@@ -68,21 +61,6 @@ curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI
 
 Response: 
 
-
-Note: Unnecessary use of -X or --request, POST is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 6200 (#0)
-> POST /api/categories HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-
-> Content-type: application/json
-> xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8
-> Content-Length: 15
->
 * upload completely sent off: 15 out of 15 bytes
 < HTTP/1.1 200 OK
 < X-Powered-By: Express

@@ -37,13 +37,6 @@ CURL : curl -v -X GET localhost:6200/api/cities
 
 Response:
 
-Note: Unnecessary use of -X or --request, GET is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6200 (#0)
-> GET /api/cities HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *

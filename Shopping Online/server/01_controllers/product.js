@@ -88,18 +88,10 @@ If we dont have products we will use the template(products.json) and insert test
 
 Get all Categories - Get Request
 
-CURL : curl -v -X GET localhost:6200/api/products/a
+curl -v -X GET localhost:6200/api/products/a
 
 C:\Users\hanm15>curl -v -X GET localhost:6200/api/products/a
-Note: Unnecessary use of -X or --request, GET is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 6200 (#0)
-> GET /api/products/a HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
+
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *
@@ -125,13 +117,6 @@ curl -v -X GET localhost:6200/api/products/category/5bf1b03f8052e7676cc23b3f
 
 Reponse:
 
-Note: Unnecessary use of -X or --request, GET is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6200 (#0)
-> GET /api/products/category/5bf1b03f8052e7676cc23b3f HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *
@@ -162,20 +147,6 @@ User: manager.
 
 curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"name\":\"Yotvata Milk\",\"price\": 15,\"imageAddress\":\"test\",\"categoryId\": \"123321\"}" localhost:6200/api/products
 
-Note: Unnecessary use of -X or --request, POST is already inferred.
-*   Trying ::1...
-* TCP_NODELAY set
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 6200 (#0)
-> POST /api/products HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-
-> Content-type: application/json
-> xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8
-> Content-Length: 100
->
 * upload completely sent off: 100 out of 100 bytes
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
@@ -205,16 +176,6 @@ curl -v -X PUT -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1
 
 response:
 
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 6200 (#0)
-> PUT /api/products/5bf1bfa400098551e8e25c01 HTTP/1.1
-> Host: localhost:6200
-> User-Agent: curl/7.55.1
-> Content-type: application/json
-> xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8
-> Content-Length: 99
->
 * upload completely sent off: 99 out of 99 bytes
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
