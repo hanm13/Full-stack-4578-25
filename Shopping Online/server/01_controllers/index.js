@@ -14,6 +14,7 @@ const cities=require('./cities');
 const category=require('./category');
 const cart=require('./cart');
 const cartItems=require('./cartitem');
+const order=require('./order');
 
 
 // Create express app:
@@ -49,6 +50,7 @@ cities.init(app);
 category.init(app);
 cart.init(app);
 cartItems.init(app);
+order.init(app);
 
 
 app.listen(process.env.PORT || 6200, ()=>{console.log("ok")})

@@ -56,7 +56,7 @@ let init = (app) => {
                     };
                     res.header('xx-auth', jwt.sign(data, 'my secret'));
 
-                    res.status(200).send();
+                    res.status(200).send(currentUser);
 
                     /*if(currentUser.cart){
                         Promise.all(currentUser.cart.map(el=>product.ProductModel.findOne({"_id":el})))

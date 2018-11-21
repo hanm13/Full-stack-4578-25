@@ -5,7 +5,7 @@ const product = require('../00_models/product');
 
 let init = (app) => {
 
-    // Get all cart items from the active cart of the user.
+    // Get all cart items from the active cart of the user by user ID.
 
     app.get("/api/cartitems/:q", userMiddleware.middleware, (req, res) => {
 
@@ -37,7 +37,6 @@ let init = (app) => {
             .then(product => {
 
                 resolve(product.price * amount);
-                
 
             })
             .catch((e) => {
@@ -50,81 +49,73 @@ let init = (app) => {
 
     }
 
+    let createNewUserCart = (userID) => {
+
+        return new Promise((resolve,reject)=>{
+
+            // Createing new user cart!
+            let newUserCart = new cart.CartModel({"userID":userID});
+            console.log("Creating new user cart because we added items without any cart, new cart ID:", newUserCart._id);
+
+            newUserCart.save().then(()=>{
+
+                resolve(newUserCart);
+
+            })
+
+        })
+
+    }
+
     // Create new cart item for user by ID
     app.post("/api/cartitems/:q", userMiddleware.middleware, (req, res) => {
 
         cart.CartModel.findOne({"userID":req.params.q, "active":true})
-        .then(userCart => {
+        .then(async userCart => {
 
-            getProductTotalPriceByID(req.body.productID, req.body.amount)
+            if(!userCart){
+
+                userCart = await createNewUserCart(req.params.q);
+
+            }
+
+            return userCart;
+
+        }).then((userCart)=>{
+
+            console.log("User cart ID:", userCart._id);
+
+            cartItem.CartItemModel.findOne({"cartID": userCart._id, "productID":req.body.productID})
+            .then(product => {
+
+                if(product){
+
+                    res.status(400).send(`Item already in the cart, you should send PUT request to update the item in the cart, you can sent the PUT request to update item cart ID: ${product._id}`)
+                    return;
+
+                }
+
+                getProductTotalPriceByID(req.body.productID, req.body.amount)
                 .then((totalItemPrice)=>{
 
-                    return totalItemPrice;
-                })
-
-                .then((totalItemPrice)=>{
-
-                    cartItem.CartItemModel.findOne({cartID: req.body.cartID, productID:req.body.productID})
-                    .then(product => {
-
-                        if(product ){
-
-                            res.status(400).send("Item already in the cart, you should send PUT request to update the item in the cart!")
+                    let newCartItem = new cartItem.CartItemModel({...req.body, cartID:userCart._id, "totalPrice": totalItemPrice}); // item info
+    
+                    newCartItem.save()
+                        .then(() => {
                             
-                        }else{
+                            console.log("saved");
+                            res.status(200).send(newCartItem)
+                        })
+                        .catch((e) => {
+                            
+                            res.status(400).send(e)
+                        });
+                
     
-                            if(userCart){
 
-                                let newCartItem = new cartItem.CartItemModel({...req.body, "totalPrice": totalItemPrice}); // item info
+                })
                 
-                                newCartItem.save()
-                                    .then(() => {
-                                        
-                                        res.status(200).send(newCartItem)
-                                    })
-                                    .catch((e) => {
-                                        
-                                        res.status(400).send(e)
-                                    });
-                        
-                
-                            }else{
-                
-                                let newCart = new cart.CartModel({"userID":req.params.q});
-                                console.log("Creating new user cart because we added items without any cart");
-                
-                                newCart.save()
-                                    .then(() => {
-                
-                                        let newCartItem = new cartItem.CartItemModel({...req.body, "cartID":newCart._id, "totalPrice": totalItemPrice}); // item info
-                                        newCartItem.save()
-                                        .then(() => {
-                                            
-                                            res.status(200).send(newCartItem)
-                
-                                        })
-                                        .catch((e) => {
-                                            
-                                            res.status(400).send(e)
-                                        });
-                                        
-                                    })
-                                    .catch((e) => {
-                                        
-                                        res.status(400).send(e)
-                                    });
-                
-                            }
-                        }
-    
-                    })
-                    .catch(err => {
-                        res.status(400).send(err)
-                    });
-
-                });
-
-            
+            })
 
         })
         .catch((e) => { res.status(400).send(e) });
@@ -138,7 +129,7 @@ let init = (app) => {
     app.put("/api/cartitems/:q", userMiddleware.middleware, (req, res) =>{
 
         cartItem.CartItemModel.findOne({_id: req.params.q})
-        .then(cart => {
+        .then(cartItem => {
 
             getProductTotalPriceByID(req.body.productID, req.body.amount).then((totalPrice)=> {
                 
@@ -147,7 +138,7 @@ let init = (app) => {
                 cartItem.cartID = req.body.cartID;
                 cartItem.totalPrice = totalPrice;
                 cartItem.save();
-                res.status(200).send(cart);
+                res.status(200).send(cartItem);
 
             })
 
@@ -249,5 +240,28 @@ reponse:
 < Connection: keep-alive
 <
 Deleted!* Connection #0 to host localhost left intact
+
+*/
+
+/*
+
+Update Cart Item - PUT Request
+
+curl -v -X PUT -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"productID\":\"5bf1c28f2ef529256429f377\",\"amount\":30,\"cartID\":\"5bf445658c28b55b60c11a9a\"}" localhost:6200/api/cartitems/5bf445658c28b55b60c11a9b
+
+Response:
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 146
+< ETag: W/"92-fuzI/iJgjEog2bOCR15KgDwsYHc"
+< Date: Wed, 21 Nov 2018 08:30:58 GMT
+< Connection: keep-alive
+<
+{"_id":"5bf445658c28b55b60c11a9b","productID":"5bf1c28f2ef529256429f377","amount":30,"cartID":"5bf445658c28b55b60c11a9a","totalPrice":150,"__v":0}* Connection #0 to host localhost left intact
 
 */

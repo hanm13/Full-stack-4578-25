@@ -164,7 +164,7 @@ curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI
 
 ____
 
-Edit product - Put Request
+Edit/Update product - Put Request
 
 Product: Yotvata Milk
 _id: 5bf1bfa400098551e8e25c01
