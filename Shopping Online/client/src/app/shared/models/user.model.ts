@@ -1,4 +1,5 @@
-export interface User{
+export interface User {
+
     personID?: string;
     firstName?: string;
     lastName?: string;
@@ -7,4 +8,5 @@ export interface User{
     city?: string;
     street?: string;
     token?: string;
+    role?: Number;
 }

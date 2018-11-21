@@ -10,7 +10,27 @@ let init = (app) => {
     // Register validation: // For user register, step 1!
     app.post("/api/users/validateRegister", userExistsMiddleWare.middleware, (req, res) => {
 
-        res.status(200).send("User is valid!");
+        let properties = [{key:"personID", error:"Identity number"}, {key:"userName", error:"User name(email)"}, {key:"userPassword", error:"Password"}];
+        let missingProperties = [];
+
+        properties.forEach(property => {
+
+            if (!req.body[property.key]) {
+
+                missingProperties.push(property.error);
+
+            }
+            
+        });
+
+        if(missingProperties.length > 0 ){
+
+            res.status(401).send({success:true, msg:missingProperties});
+            return;
+
+        }
+
+        res.status(200).send({success:true, msg:"User is valid!"});
 
     });
 

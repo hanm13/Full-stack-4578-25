@@ -1,12 +1,25 @@
  <!--HOME PAGE-->
- <div id="main-container">
-    <div id="band" class="container text-center">
-        <h1>Welcome to our Book Store</h1>
-        <img [src]="shopImg"/>
-        <div id="address-info">
-            <p *ngFor="let x of addressArray">
-                {{x}}
-            </p>
+ <div id="container mh-100">
+    <div class="d-flex row ml-auto">
+        <div class="col-sm-4 flex-grow-0 border-right bg-primary"><!-- Login -->
+            
+            <app-account></app-account>
+
+
         </div>
-    </div>
+        <div class="col-sm-4 flex-grow-0 border-right"><!-- Description -->
+            
+            <div class="w-50 h-50">
+                hi
+            </div>
+
+        </div>
+        <div class="col-sm-4 flex-grow-0 border-right"><!-- Statistics -->
+ 
+            <div class="w-50 h-50">
+                hi
+            </div>
+
+        </div>
+      </div>
 </div>

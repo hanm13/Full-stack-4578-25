@@ -30,7 +30,7 @@ export class BookListComponent {
     }
 
     public addToCart(bookId:string){
-        this.myUserService.editUserCart(bookId,true);
+        //this.myUserService.editUserCart(bookId,true);
     }
 
     public constructor(private myBookService: BookService,private myUserService: UserService) {

@@ -13,7 +13,7 @@ let cartItemSchema = new mongoose.Schema({
     },
    cartID: {
         type: String,
-    }
+    } // active cart of the user
 });
 
 let CartItemModel = mongoose.model("CartItem", cartItemSchema);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user-service.services';
 import { User } from '../shared/models/user.model';
 import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-account',
@@ -11,37 +12,143 @@ import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
 export class AccountComponent implements OnInit {
   // ----------------PROPERTIRS-------------------
   loginForm: FormGroup;
-  registerForm: FormGroup;
+  registerStepOneForm: FormGroup;
+  registerStepTwoForm: FormGroup;
   state = 'login';
   user: User;
+  registerAvailableCities: any = {cities: []};
+  formRegisterErrors = { 'msg': [] };
 
-  constructor(private myUserService: UserService) {
+  constructor(private myUserService: UserService, private myHttpClient: HttpClient) {
 
     this.user = this.myUserService.currentUser;
 
     const loginGroupConfig = {
-      userName: this.getFormControl(2, 15, 'user name'),
-      userPassword: this.getFormControl(5, 10, 'password')
+      userName: this.getFormControl(2, 15, 'User name'),
+      userPassword: this.getFormControl(5, 10, 'Password')
     };
 
 
-    const registerGroupConfig = {
-        personID: this.getFormControl(9, 9, 'person ID'),
-        userName: this.getFormControl(2, 15, 'user name'),
-        userPassword: this.getFormControl(5, 10, 'password'),
-        firstName: this.getFormControl(2, 15, 'first name'),
-        lastName: this.getFormControl(2, 15, 'last name'),
-        city: this.getFormControl(99, 99, 'city'),
-        street: this.getFormControl(99, 99, 'street')
+    const registerStepOneGroupConfig = {
+
+        // Real ID validator
+        // Pattern: https://github.com/AnnaKarpf/Full-stack-4578_25/blob/master/02_Angular/Day%2007%20-%2013.09.2018/Homework.docx
+        personID: new FormControl('', [
+          f => (!f.value ?  { err: `` } : null),
+          f => !f.value && !f.pristine ? { 'err': `ID is required` } : null,
+          f => f.value && f.value.length < 9 ? { 'err': `ID is min 9 chars` } : null,
+          f => f.value && f.value.length > 9 ? { 'err': `ID is max 9 chars` } : null,
+          function(f) {
+            if (f.value && f.value.length) {
+
+              const tempValArr = f.value.toString().split('');
+
+              // A
+
+              if (tempValArr.length < 9) {
+                for (let i = 0; i < tempValArr.length; i++) {
+                  if (tempValArr.length < 9) {
+                    tempValArr.unshift('0');
+                  }
+              }
+             }
+
+
+              // B
+              const accessoriesNumbers = [1, 2, 1, 2, 1, 2, 1, 2, 1];
+              const accessoriesValueArr = [];
+
+              // C
+
+              for (let acc_num = 0; acc_num < accessoriesNumbers.length; acc_num++) {
+
+                accessoriesValueArr.push(accessoriesNumbers[acc_num] * tempValArr[acc_num]);
+
+               }
+
+               // D
+
+               for (let acc_value = 0; acc_value < accessoriesValueArr.length; acc_value++) {
+                   if (accessoriesValueArr[acc_value] > 9) {
+
+                     const tempNum = Math.floor(accessoriesValueArr[acc_value] / 10);
+                     const tempNum2 = accessoriesValueArr[acc_value] % 10;
+
+                     accessoriesValueArr[acc_value] = tempNum + tempNum2;
+                   }
+               }
+
+              let counter = 0;
+              for (let i = 0; i < accessoriesValueArr.length; i++) {
+                  counter += accessoriesValueArr[i];
+              }
+
+              if (counter % 10 === 0) {
+
+
+                return null;
+
+              } else {
+
+                return { 'err': `Invalid ID!` };
+
+              }
+
+
+
+            }
+          },
+
+        ]),
+
+        userName: this.getFormControl(2, 15, 'User name'),
+        userPassword: this.getFormControl(5, 10, 'Password'),
+        userPasswordConfirm: new FormControl('', [
+          f => (!f.value ?  { err: `` } : null),
+          f => (!f.value  && !f.pristine ?  { err: `Password confirm is required!` } : null),
+          f => f.value && f.value !== this.registerStepOneForm.value.userPassword ? { err: `Password does not match!` } : null,
+        ]),
 
     };
+
+    const registerStepTwoGroupConfig = {
+
+      firstName: this.getFormControl(2, 15, 'First name'),
+      lastName: this.getFormControl(2, 15, 'Last name'),
+      city: this.getFormControl(1, 99, 'City'),
+      street: this.getFormControl(1, 99, 'Street'),
+
+
+  };
 
     this.loginForm = new FormGroup(loginGroupConfig);
-    this.registerForm = new FormGroup(registerGroupConfig);
+    this.registerStepOneForm = new FormGroup(registerStepOneGroupConfig);
+    this.registerStepTwoForm = new FormGroup(registerStepTwoGroupConfig);
+
+  } // end constructor funciton
+
+  ngOnInit() {
+
+    this.initRegisterCities();
+
+  }
+
+  initRegisterCities() {
+
+    this.myHttpClient.get('http://localhost:6200/api/cities')
+    .subscribe((resp) => {
+        this.registerAvailableCities.cities = resp;
+    }, (err) => {
+
+        console.log(err);
+
+    });
+
   }
 
   getFormControl(min, max, label) {
-      return new FormControl('testt', [
+      return new FormControl('', [
+        f => (!f.value ?  { err: `` } : null),
         f => (!f.value && !f.pristine ? { err: `${label} is required` } : null),
         f => f.value && f.value.length > max ? { err: `${label} is max ${max} chars` } : null,
         f => f.value && f.value.length < min ? { err: `${label} is min ${min} chars` } : null
@@ -63,22 +170,41 @@ export class AccountComponent implements OnInit {
   }
   registerUser() {
     this.myUserService.registerUser({
-      personID: this.registerForm.value.personID,
-      firstName: this.registerForm.value.firstName,
-      lastName: this.registerForm.value.lastName,
-      userName: this.registerForm.value.userName,
-      password: this.registerForm.value.userPassword,
-      city: this.registerForm.value.city,
-      street: this.registerForm.value.street
+      personID: this.registerStepOneForm.value.personID,
+      userName: this.registerStepOneForm.value.userName,
+      password: this.registerStepOneForm.value.userPassword,
+
+      firstName: this.registerStepTwoForm.value.firstName,
+      lastName: this.registerStepTwoForm.value.lastName,
+      city: this.registerStepTwoForm.value.city,
+      street: this.registerStepTwoForm.value.street
 
     });
 
-    this.registerForm.reset();
+    this.registerStepOneForm.reset();
+    this.registerStepTwoForm.reset();
+  }
+
+  async registerNextClick() {
+
+    this.myUserService.validateUserRegister(this.registerStepOneForm.value).then((resp) => {
+
+      this.changeState('register2');
+
+
+    }).catch((err) => {
+
+      console.log(err);
+
+      this.formRegisterErrors.msg = err.error.msg;
+
+    });
+
   }
 
   logout() {
     this.myUserService.currentUser.userName = 'Guest';
     this.myUserService.currentUser.token = undefined;
   }
-  ngOnInit() {}
+
 }

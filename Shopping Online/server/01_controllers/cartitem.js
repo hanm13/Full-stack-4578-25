@@ -15,6 +15,12 @@ let init = (app) => {
             if(cart){
                 cartItem.CartItemModel.find({"cartID":cart._id})
                 .then(items => {
+
+                        // TODO : Search the actual products inside the products collection and return the filtered object with the product image.
+
+                        // each Item inside items should include the following properties after filter:
+                        // product name, product picture and price for single product.
+
                     res.status(200).send(JSON.stringify({"items":items}));
                 })
                 .catch((e) => { res.status(400).send(e) });
@@ -104,7 +110,13 @@ let init = (app) => {
                         .then(() => {
                             
                             console.log("saved");
-                            res.status(200).send(newCartItem)
+
+                            // Search the actual product inside the products collection and return the filtered object with the product image.
+
+                            // Item inside newCartItem should include the following properties after filter:
+                            // product name, product picture and price for single product.
+
+                            res.status(201).send(newCartItem)
                         })
                         .catch((e) => {
                             

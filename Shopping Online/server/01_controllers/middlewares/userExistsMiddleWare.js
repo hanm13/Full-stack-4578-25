@@ -4,20 +4,40 @@
     
     let userExistsMiddleWare = (req, res, nextStep) => {
 
+        let errors = [];
+
         user.UserModel.count({
             "personID": req.body.personID
         }).then(counter => {
             if (counter) {
-                res.status(401).send("User is already exists with this ID!");
+                res.status(401).send({success:false, msg:["User is already exists with this ID!"]});
             } else {
 
-                nextStep();
+                user.UserModel.count({
+                    "userName": req.body.userName
+                }).then(counter => {
+
+                    if (counter) {
+
+                        res.status(401).send( {success:false, msg:["User is already exists with this email!"]});
+
+                    }else{
+
+                        nextStep();
+
+                    }
+
+                })
+                .catch((e) => {
+                    res.status(401).send({success:false, msg:["User is already exists with this email!"]});
+                });  
+                
                 
             }
 
         })
         .catch((e) => {
-            res.status(401).send("User is already exists with this ID!");
+            res.status(401).send({success:false, msg:["User is already exists with this ID!"]});
         });        
 
     };

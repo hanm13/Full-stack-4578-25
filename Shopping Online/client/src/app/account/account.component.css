@@ -19,3 +19,14 @@ margin-top: 25px;
     display: block;
     margin-top: 30px;  
 }
+.float-right{
+    float:right;
+}
+
+select{
+    color: black;
+}
+
+.registerBorder{
+    border-bottom: 1px solid black;
+}

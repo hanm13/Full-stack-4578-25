@@ -30,7 +30,7 @@ export class CartComponent implements OnInit {
     }
     
     removeFromCart(bookId:string){
-        this.myUserService.editUserCart(bookId,false);
+        //this.myUserService.editUserCart(bookId,false);
     }
 
     ngOnInit() {
