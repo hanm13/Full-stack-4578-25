@@ -16,12 +16,55 @@ let init = (app) => {
                 cartItem.CartItemModel.find({"cartID":cart._id})
                 .then(items => {
 
-                        // TODO : Search the actual products inside the products collection and return the filtered object with the product image.
+                        let productIds = [];
 
-                        // each Item inside items should include the following properties after filter:
-                        // product name, product picture and price for single product.
+                        items.forEach(element => {
 
-                    res.status(200).send(JSON.stringify({"items":items}));
+                            productIds.push(element.productID);
+                            
+                        });
+
+                        // We use array of ids to find all products with the same id,
+                        // then we use the returned array of products for set imageAddress and name of product for cart item.
+                        product.ProductModel.find({ 
+                            '_id': { $in: productIds} // Find products that have the ids inside the productIds array.
+                        }, function(err, docs){
+                             console.log(docs);
+                        }).then((products)=>{
+
+                            let filteredItemsArr = [];
+
+                            products.forEach(product => {
+
+                                for (let index = 0; index < items.length; index++) {
+
+                                    if( product._id == items[index].productID){ // check if cart item has the same productID.
+
+                                        // we creating temp object for getting the properties and also setting new ones as the imageAddress and name.
+                                        let tempObj = {
+                                            id: items[index]._id,
+                                            productID: items[index].productID,
+                                            amount: items[index].amount,
+                                            cartID: items[index].cartID,
+                                            totalPrice: items[index].totalPrice,
+                                            __v: items[index].__v,
+                                            imageAddress: product.imageAddress,
+                                            name: product.name,
+                                            priceSingle: product.price,
+                                        };
+
+                                        filteredItemsArr.push(tempObj);
+
+                                    }
+                                    
+                                }
+                                
+                            });
+
+                            res.status(200).send(JSON.stringify({"cartitems":filteredItemsArr}));
+
+                        })
+                    
                 })
                 .catch((e) => { res.status(400).send(e) });
             }else{
@@ -108,6 +151,7 @@ let init = (app) => {
     
                     newCartItem.save()
                         .then(() => {
+                            
                             
                             console.log("saved");
 
