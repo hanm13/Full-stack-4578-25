@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { hash } from './sha-convertor.service';
-import { Book } from '../models/book.model';
-import { Key } from 'selenium-webdriver';
 
 // מאפשר לשירות הנוכחי להשתמש בתוכו בשירותים אחרים
 @Injectable()
 export class UserService {
-    currentUser: User = { firstName: 'Guest', userName: 'Guest', token: undefined};
-
+    currentUser: User = { firstName: 'Guest', userName: 'Guest', token: undefined, cart: undefined, cartItems: undefined};
+    state: any = { state: 'shopping' };
 
     constructor(private myHttpClient: HttpClient) {}
 
@@ -34,6 +32,8 @@ export class UserService {
                 }
 
                 this.currentUser.token = resp.headers.get('xx-auth');
+                this.initUserCart();
+                this.initUserCartItems();
             });
     }
 
@@ -58,9 +58,6 @@ export class UserService {
 
     validateUserRegister(newUser) {
 
-        console.log(newUser);
-
-
         return new Promise((resolve, reject) => {
 
             this.myHttpClient.post('http://localhost:6200/api/users/validateRegister', newUser, {observe: 'response'})
@@ -74,27 +71,104 @@ export class UserService {
 
         });
 
+    }
+
+    initUserCart(): void {
+
+        const apiUrl = `http://localhost:6200/api/activecarts/${this.currentUser._id}`;
 
 
+        this.myHttpClient.get(apiUrl, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }})
+            .subscribe((resp: any) => {
+
+                this.currentUser.cart = resp.carts[0];
+
+            });
+    }
+
+    initUserCartItems(): void {
+
+        const apiUrl = `http://localhost:6200/api/cartitems/${this.currentUser._id}`;
+
+
+        this.myHttpClient.get(apiUrl, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }})
+            .subscribe((resp: any) => {
+
+                this.currentUser.cartItems = resp.cartitems;
+                console.log(resp);
+
+            });
+    }
+
+    addCartItem(product, amount) {
+
+
+            this.myHttpClient.post(`http://localhost:6200/api/cartitems/${this.currentUser._id}`,
+            {productID: product._id, amount: amount}, {
+                headers: {
+                    'xx-auth': `${this.currentUser.token}` // authentication for request!
+                }
+
+            })
+            .subscribe((resp: any) => {
+
+                this.currentUser.cartItems = resp.cartitems;
+
+            });
+    }
+    updateCartItem(cartItemID, amount) {
+
+
+        this.myHttpClient.put(`http://localhost:6200/api/cartitems/${cartItemID}`,
+        {amount: amount, userID: this.currentUser._id}, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }
+
+        })
+        .subscribe((resp: any) => {
+
+            this.currentUser.cartItems = resp.cartitems;
+
+        });
+    }
+
+    emptyCartItems() {
+
+        this.myHttpClient.delete(`http://localhost:6200/api/cartitems/empty/${this.currentUser.cart._id}`, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }
+
+        })
+        .subscribe((resp: any) => {
+
+            this.currentUser.cartItems = [];
+
+        });
     }
 
 
-    // editUserCart(bookId: string, isAddMode: boolean): void {
-    //     const apiUrl = `http://localhost:6200/api/users`;
+    removeCartItem(cartItemID) {
 
-    //     this.myHttpClient.put(apiUrl, {
-    //         'bookId': bookId,
-    //         'isAddMode': isAddMode
-    //     } ,
-    //     {
-    //         observe: 'response',
-    //         headers: {
-    //             'xx-auth': this.currentUser.token
-    //         }})
-    //     .subscribe((resp) => {
-    //         //this.currentUser.cart = <Book[]>resp.body;
-    //         console.log(resp);
-    //     });
-    // }
+        this.myHttpClient.delete(`http://localhost:6200/api/cartitems/${cartItemID}`, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }
+
+        })
+        .subscribe((resp: any) => {
+
+            this.currentUser.cartItems = resp.cartitems;
+
+        });
+
+    }
 
 }

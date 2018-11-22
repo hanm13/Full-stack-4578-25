@@ -77,6 +77,19 @@ let init = (app) => {
     
     });
 
+    app.delete("/api/products/:q", managerMiddlware.middleware, (req, res) =>{
+
+        console.log(req.params.q);
+
+        product.ProductModel.deleteOne({_id: req.params.q})
+        .then(() => {
+
+            res.status(200).send("Deleted!");
+        })
+        .catch(err => res.status(400).send(err));
+    
+    });
+
 }
 
 module.exports = { init }
@@ -86,7 +99,7 @@ module.exports = { init }
 
 If we dont have products we will use the template(products.json) and insert test item to the products collection.
 
-Get all Categories - Get Request
+Get all products - Get Request
 
 curl -v -X GET localhost:6200/api/products/a
 
@@ -145,22 +158,21 @@ xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZT
 User: manager.
 
 
-curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"name\":\"Yotvata Milk\",\"price\": 15,\"imageAddress\":\"test\",\"categoryId\": \"123321\"}" localhost:6200/api/products
+curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"name\":\"Cola\",\"price\": 5,\"imageAddress\":\"/images/cola.png\",\"categoryId\": \"5bf1b12e8d1faa0d40ddb711\"}" localhost:6200/api/products
 
-* upload completely sent off: 100 out of 100 bytes
+* upload completely sent off: 101 out of 101 bytes
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
 < Access-Control-Allow-Origin: *
 < Access-Control-Allow-Methods: GET,PUT,POST,DELETE
 < Access-Control-Allow-Headers: Content-Type, xx-auth
 < Content-Type: application/json; charset=utf-8
-< Content-Length: 139
-< ETag: W/"8b-RYjnGPnlzHmb6QCPS8BUWgcsh9Y"
-< Date: Sun, 18 Nov 2018 19:38:12 GMT
+< Content-Length: 140
+< ETag: W/"8c-rx7GU930KSjE/5qJsk3tjYMO8w8"
+< Date: Thu, 22 Nov 2018 12:32:09 GMT
 < Connection: keep-alive
 <
-{"_id":"5bf1bfa400098551e8e25c01","name":"Yotvata1 Milk","categoryId":"5bf1b03f8052e7676cc23b3f1","price":15,"imageAddress":"test","__v":0}* Connection #0 to host localhost left intact
-
+{"_id":"5bf6a1c9cbd3e368e43a2429","name":"Cola","price":5,"imageAddress":"/images/cola.png","categoryId":"5bf1b12e8d1faa0d40ddb711","__v":0}* Connection #0 to host localhost left intact
 
 ____
 
@@ -189,5 +201,27 @@ response:
 < Connection: keep-alive
 <
 {"_id":"5bf1bfa400098551e8e25c01","name":"Yotvata Milk","categoryId":"5bf1b03f8052e7676cc23b3f1","price":18,"imageAddress":"test","__v":0}* Connection #0 to host localhost left intact
+
+/*
+
+Delete product by productID
+
+curl -v -X DELETE -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" localhost:6200/api/products/5bf1c28f2ef529256429f377
+
+Reponse:
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 8
+< ETag: W/"8-1z6ssizdlKMf7K4C7nfIUlQscuk"
+< Date: Thu, 22 Nov 2018 13:09:59 GMT
+< Connection: keep-alive
+<
+Deleted!* Connection #0 to host localhost left intact
+
 
 */

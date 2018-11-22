@@ -166,13 +166,12 @@ Reponse:
 < Access-Control-Allow-Methods: GET,PUT,POST,DELETE
 < Access-Control-Allow-Headers: Content-Type, xx-auth
 < Content-Type: text/html; charset=utf-8
-< Content-Length: 350
-< ETag: W/"15e-d7JA202mYK6jDNVata5q9FhW/yQ"
-< Date: Tue, 20 Nov 2018 08:30:59 GMT
+< Content-Length: 127
+< ETag: W/"7f-OxUALtzFkPqCMaIsWkkDKdnxuRM"
+< Date: Thu, 22 Nov 2018 14:33:46 GMT
 < Connection: keep-alive
 <
-{"carts":[{"active":true,"_id":"5bf3c30bad2f7f58e447fa85","userID":"5bf15b5a7668b92468f010d1","date":"20.11.2018","__v":0},{"active":true,"_id":"5bf3c516ca1d29164042558c","userID":"5bf15b5a7668b92468f010d1","date":"20.11.2018","__v":0},{"active":true,"_id":"5bf3c55207a0440690537884","userID":"5bf15b5a7668b92468f010d1","date":"20.11.2018","__v":0}]}* Connection #0 to host localhost left intact
-
+{"carts":[{"active":true,"_id":"5bf3ec1b7278ab0a7ca8f0a3","userID":"5bf15b5a7668b92468f010d1","date":"1542712347182","__v":0}]}* Connection #0 to host localhost left intact
 */
 
 /*

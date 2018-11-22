@@ -2,7 +2,9 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <img src=".\assets\images\logo.png"/>
-            <span id="profile">Welcome {{user?.firstName}}</span>
+            <span id="profile">Welcome {{user?.firstName}} <button *ngIf="user.firstName != 'Guest'" class="form-control btn btn-primary" (click)="logout()">Logout</button>
+            </span>
+            
         </div>
         <div id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -11,17 +13,11 @@
                 <li>
                     <a routerLink="/home">HOME</a>
                 </li>
-                <li>
-                    <a routerLink="/books">BOOKS</a>
-                </li>
 
                 <li *ngIf="user.userName!='Guest'">
-                    <a routerLink="/cart">CART</a>
+                    <a routerLink="/shopping">SHOP</a>
                 </li>
 
-                <li>
-                    <a routerLink="/account">ACCOUNT</a>
-                </li>
                
             </ul>
         </div>

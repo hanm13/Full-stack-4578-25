@@ -1,0 +1,22 @@
+.productItem{
+
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+}
+
+
+
+.addItemToCartDiv{
+
+    position: absolute;
+    width: 250px;
+    height: 150px;
+    background-color: whitesmoke;
+    border: 1px solid black;
+
+}
+.addToCartBtn{
+    margin-left: 70px;
+    margin-top: 5px;
+}

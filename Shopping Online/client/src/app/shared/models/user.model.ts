@@ -1,5 +1,6 @@
 export interface User {
 
+    _id?: string;
     personID?: string;
     firstName?: string;
     lastName?: string;
@@ -9,4 +10,6 @@ export interface User {
     street?: string;
     token?: string;
     role?: Number;
+    cart?: any;
+    cartItems?: any;
 }

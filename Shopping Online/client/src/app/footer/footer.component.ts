@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
     styleUrls: []
 })
 export class FooterComponent {
-  adminName: string = "John Bryce - full stack";
-  currentYear:number=(new Date()).getFullYear();
+  adminName = 'Chen Magled';
+  currentYear: number = (new Date()).getFullYear();
 }

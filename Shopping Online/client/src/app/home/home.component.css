@@ -10,3 +10,17 @@ h1{
 #address-info{
     padding-top: 90px;
 }
+
+.homeContainerDiv{
+
+    min-height: 650px;
+    margin-right: 10px;
+}
+
+.homeFlex{
+
+    width: 90%;
+    position: relative;
+    left: 8%;
+
+}
