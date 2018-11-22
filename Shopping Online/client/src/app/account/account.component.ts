@@ -35,8 +35,8 @@ export class AccountComponent implements OnInit {
         // Pattern: https://github.com/AnnaKarpf/Full-stack-4578_25/blob/master/02_Angular/Day%2007%20-%2013.09.2018/Homework.docx
         personID: this.getPersonIDFormControl(),
 
-        userName: this.getFormControl(2, 15, 'User name'),
-        userPassword: this.getFormControl(5, 10, 'Password'),
+        userName: this.getFormControl(2, 45, 'User name'),
+        userPassword: this.getFormControl(6, 16, 'Password'),
         userPasswordConfirm: new FormControl('', [
           f => (!f.value ?  { err: `` } : null),
           f => (!f.value  && !f.pristine ?  { err: `Password confirm is required!` } : null),

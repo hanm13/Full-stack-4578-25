@@ -119,6 +119,10 @@ export class UserService {
             .subscribe((resp: any) => {
 
                 this.currentUser.cartItems = resp.cartitems;
+                if ( this.currentUser.cart === undefined) {
+                    this.initUserCart();
+                }
+                
 
             });
     }
