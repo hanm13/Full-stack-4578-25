@@ -15,6 +15,7 @@ export class OrderCreationComponent implements OnInit {
   user: User;
   orderForm: FormGroup;
   orderAvailableCities: any = {cities: []};
+  orderFormErrors: any = { errors: []};
 
 
   constructor(private myUserService: UserService, private myOrderService: OrdersService, private myHttpClient: HttpClient) {
@@ -49,7 +50,11 @@ export class OrderCreationComponent implements OnInit {
   createNewOrder() {
 
 
-        // {\"city\":\"batYam\",\"street\":\"Balfur\",\"shippingDate\":\"21/11/2018\",\"visaDigits\":\"4567\"}
+    this.myOrderService.validateOrderDate(this.orderForm.value.shippingDate).then((amount: any) => {
+
+      this.orderFormErrors.errors = [];
+
+      if (amount.ordersAmount < 3) {
 
         const newOrderInfo = {
 
@@ -60,7 +65,21 @@ export class OrderCreationComponent implements OnInit {
 
         };
 
-      this.myOrderService.createNewOrder( newOrderInfo , this.user._id , this.user.token);
+        this.myOrderService.createNewOrder( newOrderInfo );
+
+      } else {
+
+        this.orderFormErrors.errors.push('You must select different day, all shipments are taken!');
+
+
+      }
+
+    });
+
+
+        // {\"city\":\"batYam\",\"street\":\"Balfur\",\"shippingDate\":\"21/11/2018\",\"visaDigits\":\"4567\"}
+
+
 
   }
 

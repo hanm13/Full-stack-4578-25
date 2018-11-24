@@ -30,24 +30,41 @@ export class OrdersService {
 
     }
 
-    createNewOrder(newOrderInfo, userID, userToken) {
+    createNewOrder(newOrderInfo) {
 
-        this.myHttpClient.post(`http://localhost:6200/api/orders/${userID}`, newOrderInfo, {
+        this.myHttpClient.post(`http://localhost:6200/api/orders/${this.user._id}`, newOrderInfo, {
             headers: {
-                'xx-auth': `${userToken}` // authentication for request!
+                'xx-auth': `${this.user.token}` // authentication for request!
             }
 
         })
         .subscribe((resp: any) => {
 
-            console.log(resp);
-
             this.user.cart = undefined;
             this.user.cartItems = undefined;
             this.currentCreatedOrder.order = newOrderInfo;
-            console.log("bfore:", this.user.orders);
             this.user.orders = <Order[]>resp.orders;
-            console.log("after:", this.user.orders);
+
+        });
+
+    }
+
+    validateOrderDate(date) {
+
+        return new Promise((resolve, reject) => {
+
+            this.myHttpClient.get(`http://localhost:6200/api/count/ordersdate/${date}`, {
+                headers: {
+                    'xx-auth': `${this.user.token}` // authentication for request!
+                }
+            })
+            .subscribe((resp) => {
+                resolve(resp);
+            }, (err) => {
+
+                reject(err);
+
+            });
 
         });
 

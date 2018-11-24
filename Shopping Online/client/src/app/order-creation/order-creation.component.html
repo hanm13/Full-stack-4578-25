@@ -42,6 +42,12 @@
 
         </form>
 
+        <div class="contianer">
+
+          <p *ngFor="let error of orderFormErrors.errors">{{error}}</p>
+          
+        </div>
+
     </div>
 
 

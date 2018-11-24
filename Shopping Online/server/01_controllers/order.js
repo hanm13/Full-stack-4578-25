@@ -21,6 +21,23 @@ let init = (app) => {
        
     });
 
+    // Get counter of orders with the given date;
+
+    app.get("/api/count/ordersdate/:q", userMiddleware.middleware, (req, res) => {
+
+        order.OrderModel.count({"shippingDate":req.params.q})
+        .then(count => {
+
+            res.status(200).send(JSON.stringify({"ordersAmount":count}));
+    
+            
+
+
+        })
+        .catch((e) => { res.status(400).send(e) });
+        
+    });
+
     // Create new order by userID
     app.post("/api/orders/:q", userMiddleware.middleware, (req, res) => {
 
@@ -209,5 +226,29 @@ Reponse:
 < Connection: keep-alive
 <
 Deleted!* Connection #0 to host localhost left intact
+
+*/
+
+/*
+
+Get count of orders by shipping date
+
+
+curl -v -X GET -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" localhost:6200/api/count/ordersdate/2018-11-23
+
+Response:
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 18
+< ETag: W/"12-tJLflc1xiZji6k9TUOmLiDUYUz4"
+< Date: Sat, 24 Nov 2018 12:33:22 GMT
+< Connection: keep-alive
+<
+{"ordersAmount":1}* Connection #0 to host localhost left intact
 
 */

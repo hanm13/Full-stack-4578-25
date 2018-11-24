@@ -101,6 +101,7 @@ export class UserService {
         .subscribe((resp: any) => {
 
             this.currentUser.orders = resp.orders;
+            console.log(this.currentUser.orders);
 
         });
 
