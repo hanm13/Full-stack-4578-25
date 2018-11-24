@@ -18,9 +18,37 @@
  
             <div class="w-50 h-50">
                 Picture(img)
-                Available products in our store: (number)
-                Orders in our store: (number)
+               <p>Available products in our store: {{productsCounter.count}}</p>
+               <p>Number of orders submitted in our store: {{ordersCounter.count}}</p>
 
+                <div class="notificationInfoContainer">
+
+                    <div class="notificationBlock">
+
+                        <div *ngIf="user.cartItems && user.cartItems.length > 0">
+
+                                You have open cart from date: <span>  {{user.cart.date | date}}</span>
+            
+                            </div>
+                            <div *ngIf="user.orders && user.orders.length > 0">
+            
+                                Your last purchase was on: <span>  {{user.orders[user.orders.length - 1].creationDate | date}}</span>
+            
+                            </div>
+                            <div *ngIf="user.userName != 'Guest' && !user.cartItems && !user.orders">
+            
+                                Welcome to your first purchase!
+            
+                            </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                
             </div>
 
         </div>

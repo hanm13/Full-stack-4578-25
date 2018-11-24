@@ -170,7 +170,7 @@ let init = (app) => {
                             
                             getFileteredCartItems(userCart).then((cartItems)=>{
 
-                                res.status(201).send(cartItems);
+                                res.status(201).send({...cartItems, userCart:userCart});
             
                             })
 

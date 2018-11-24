@@ -26,6 +26,20 @@ let init = (app) => {
        
     });
 
+    // Get products count
+    app.get("/api/count/products", (req, res) => {
+        
+        product.ProductModel.count({})
+        .then(counter=>{
+
+            res.status(200).send(JSON.stringify({counter:counter}));
+            
+            
+        })
+        .catch((e) => { res.status(400).send(e) });
+        
+    });
+
 
     // Get products - BY Product ID - EVERY CLIENT CAN ACCESS: 
     app.get("/api/products/id/:q", (req, res) => {
@@ -118,6 +132,27 @@ C:\Users\hanm15>curl -v -X GET localhost:6200/api/products/a
 <
 {"items":[{"_id":"5bf1b330920cea781490d22d","name":"Tnuva Milk","categoryId":"5bf1b03f8052e7676cc23b3f","price":8,"imageAddress":"test","__v":0}]}* Connection #0 to host localhost left intact
 
+
+____
+
+Get products count - GET request
+
+curl -v -X GET localhost:6200/api/count/products
+
+response:
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 13
+< ETag: W/"d-SimcaLNdvljQISPgzmBIHcZlKo0"
+< Date: Fri, 23 Nov 2018 10:32:44 GMT
+< Connection: keep-alive
+<
+{"counter":7}* Connection #0 to host localhost left intact
 
 ____
 

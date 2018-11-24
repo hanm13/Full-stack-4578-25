@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { hash } from './sha-convertor.service';
+import { OrdersService } from './orders-service.service';
 
 // מאפשר לשירות הנוכחי להשתמש בתוכו בשירותים אחרים
 @Injectable()
 export class UserService {
-    currentUser: User = { firstName: 'Guest', userName: 'Guest', token: undefined, cart: undefined, cartItems: undefined};
-    state: any = { state: 'shopping' };
+    currentUser: User = { firstName: 'Guest', userName: 'Guest', token: undefined, cart: undefined, cartItems: undefined,
+     state: 'shopping', orders: undefined};
 
     constructor(private myHttpClient: HttpClient) {}
 
@@ -34,7 +35,22 @@ export class UserService {
                 this.currentUser.token = resp.headers.get('xx-auth');
                 this.initUserCart();
                 this.initUserCartItems();
+                this.initUserOrders();
             });
+    }
+
+    calculateTotalCartItemsPrice(cartItems) {
+
+        let total = 0;
+
+        for (let index = 0; index < cartItems.length; index++) {
+            const element = cartItems[index];
+            total += element.totalPrice;
+
+        }
+
+        return total;
+
     }
 
 
@@ -73,6 +89,23 @@ export class UserService {
 
     }
 
+    initUserOrders(): void {
+
+        const userOrdersAPI = 'http://localhost:6200/api/orders/';
+
+
+        this.myHttpClient.get(userOrdersAPI + this.currentUser._id, {
+            headers: {
+                'xx-auth': `${this.currentUser.token}` // authentication for request!
+            }})
+        .subscribe((resp: any) => {
+
+            this.currentUser.orders = resp.orders;
+
+        });
+
+    }
+
     initUserCart(): void {
 
         const apiUrl = `http://localhost:6200/api/activecarts/${this.currentUser._id}`;
@@ -101,7 +134,20 @@ export class UserService {
             .subscribe((resp: any) => {
 
                 this.currentUser.cartItems = resp.cartitems;
-                console.log(resp);
+
+                if(this.currentUser.cartItems.length > 0) {
+
+                    this.currentUser.cart.totalPrice = this.calculateTotalCartItemsPrice(this.currentUser.cartItems);
+
+                } else {
+
+                    if ( this.currentUser.cart ) {
+
+                        this.currentUser.cart.totalPrice = 0;
+
+                    }
+
+                }
 
             });
     }
@@ -119,10 +165,10 @@ export class UserService {
             .subscribe((resp: any) => {
 
                 this.currentUser.cartItems = resp.cartitems;
-                if ( this.currentUser.cart === undefined) {
-                    this.initUserCart();
-                }
-                
+                this.currentUser.cart = resp.userCart;
+                this.currentUser.cart.totalPrice = this.calculateTotalCartItemsPrice(this.currentUser.cartItems);
+
+
 
             });
     }
@@ -139,6 +185,7 @@ export class UserService {
         .subscribe((resp: any) => {
 
             this.currentUser.cartItems = resp.cartitems;
+            this.currentUser.cart.totalPrice = this.calculateTotalCartItemsPrice(this.currentUser.cartItems);
 
         });
     }

@@ -12,4 +12,6 @@ export interface User {
     role?: Number;
     cart?: any;
     cartItems?: any;
+    state?: String;
+    orders?: any;
 }

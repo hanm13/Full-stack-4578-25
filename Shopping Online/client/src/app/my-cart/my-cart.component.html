@@ -1,14 +1,15 @@
 <div class="col-sm-4 flex-grow-0 bg-primary myCartContainer">
 
-    <div>
+    <div class="text-left myCartBorder myCartDiv">
+    
+      <p class="myCartP">My Cart <button *ngIf="user.state === 'shopping' && user.cartItems && user.cartItems.length > 0" (click)="emptyCartItems()" class="btn-danger float-right">Empty Cart Items</button>
+        <a *ngIf="user.state === 'order'" (click)="updateUserState('shopping')" class="btn btn-success float-right" id="orderBtn" href="javascript:" routerLink="/shopping">Back to shop</a>
+      </p>
+    </div>
 
-        <div class="text-left myCartBorder">
+    <div *ngIf="user.cartItems && user.cartItems.length > 0">
     
-          <p>My Cart - <button (click)="emptyCartItems()" class="btn-danger">Empty Cart Items</button></p>
-          
-        </div>
-    
-        <div class="tableContainer" *ngIf="user.cartItems && user.cartItems.length > 0">
+        <div class="tableContainer">
     
           <table>
     
@@ -22,7 +23,7 @@
     
             <tr *ngFor = "let cartitem of user.cartItems">
     
-              <td><a (click)="removeCartItem(cartitem._id)" class="text-dark" href="javascript:"><span class="glyphicon glyphicon-remove"></span></a> <img [src]="cartitem.imageAddress" width="100"></td>
+              <td><a *ngIf="user.state === 'shopping'" (click)="removeCartItem(cartitem._id)" class="text-dark" href="javascript:"><span class="glyphicon glyphicon-remove"></span></a> <img [src]="cartitem.imageAddress" width="100"></td>
               <td><span class="productSpan">{{cartitem.name}}</span></td>
               <td><span class="productSpan">{{cartitem.amount}}</span></td>
               <td><span class="productSpan">{{cartitem.priceSingle}}$</span></td>
@@ -31,9 +32,13 @@
             </tr>
     
           </table>
+          
     
         </div>
-    
+        <div>
+            <p>Total: {{user.cart.totalPrice}}$</p>
+            <a *ngIf="user.state === 'shopping'" (click)="updateUserState('order')" class="btn btn-success float-right btnToShop"  href="javascript:" routerLink="/order">Order</a>
+        </div>
     
     </div>
 

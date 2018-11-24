@@ -51,7 +51,6 @@ h3, h4 {
 }
 .btn {
     padding: 10px 20px;
-    background-color: #333;
     color: #f1f1f1;
     border-radius: 0;
     transition: .2s;
@@ -122,4 +121,10 @@ footer a:hover {
 }
 textarea {
     resize: none;
+}
+
+.bg-primary{
+
+    background-color: #0074D9;
+
 }

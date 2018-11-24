@@ -196,11 +196,10 @@ export class AccountComponent implements OnInit {
     this.myUserService.validateUserRegister(this.registerStepOneForm.value).then((resp) => {
 
       this.changeState('register2');
+      this.formRegisterErrors.msg = [];
 
 
     }).catch((err) => {
-
-      console.log(err);
 
       this.formRegisterErrors.msg = err.error.msg;
 

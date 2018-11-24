@@ -24,3 +24,14 @@ h1{
     left: 8%;
 
 }
+
+.notificationInfoContainer{
+
+    background-color: coral;
+
+}
+
+.notificationBlock{
+    margin: 5px;
+
+}

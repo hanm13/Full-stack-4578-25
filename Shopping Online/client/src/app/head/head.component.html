@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <img src=".\assets\images\logo.png"/>
-            <span id="profile">Welcome {{user?.firstName}} <button *ngIf="user.firstName != 'Guest'" class="form-control btn btn-primary" (click)="logout()">Logout</button>
+            <span id="profile">Welcome {{user?.firstName}} <button *ngIf="user.firstName != 'Guest'" [routerLink]="['/home']" routerLinkActive="router-link-active"  class="form-control btn btn-primary" (click)="logout()">Logout</button>
             </span>
             
         </div>

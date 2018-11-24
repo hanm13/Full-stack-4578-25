@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserService } from './shared/services/user-service.services';
 import { ProductsService } from './shared/services/products-service.service';
+import { OrdersService } from './shared/services/orders-service.service';
 
 import { AppComponent } from './app.component';
 import { HeadComponent } from './head/head.component';
@@ -18,6 +19,8 @@ import { ShoppingComponent } from './shopping/shopping.component';
 import { MyCartComponent } from './my-cart/my-cart.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsNavbarComponent } from './products-navbar/products-navbar.component';
+import { OrderComponent } from './order/order.component';
+import { OrderCreationComponent } from './order-creation/order-creation.component';
 
 
 const appRoutes: Routes = [
@@ -25,6 +28,8 @@ const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'account', component: AccountComponent },
     { path: 'shopping', component: ShoppingComponent },
+    { path: 'order', component: OrderComponent },
+
     // default path - will redirect the current path to 'home'
     { path: '',
       redirectTo: '/home',
@@ -48,6 +53,8 @@ const appRoutes: Routes = [
     MyCartComponent,
     ProductsComponent,
     ProductsNavbarComponent,
+    OrderComponent,
+    OrderCreationComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +63,7 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ProductsService, UserService],
+  providers: [ProductsService, UserService, OrdersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

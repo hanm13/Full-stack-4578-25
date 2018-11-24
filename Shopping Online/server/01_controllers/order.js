@@ -21,7 +21,7 @@ let init = (app) => {
        
     });
 
-    // Create new order
+    // Create new order by userID
     app.post("/api/orders/:q", userMiddleware.middleware, (req, res) => {
 
         cart.CartModel.findOne({"userID":req.params.q, "active":true})
@@ -52,7 +52,21 @@ let init = (app) => {
                     .then(() => {
                         
                         console.log("saved");
-                        res.status(200).send(newOrder)
+
+                        userCart.active = false;
+                        userCart.save().then(()=>{
+
+                            order.OrderModel.find({"userID": req.params.q}).then((orders)=>{
+
+                                res.status(200).send({"orders": orders});
+
+                            })
+
+                            
+
+                        });
+
+                        
                     })
                     .catch((e) => {
                         
@@ -84,16 +98,30 @@ let init = (app) => {
     
     });
 
+    // Get products count
+    app.get("/api/count/orders", (req, res) => {
+    
+        order.OrderModel.count({})
+        .then(counter=>{
+
+            res.status(200).send(JSON.stringify({counter:counter}));
+            
+            
+        })
+        .catch((e) => { res.status(400).send(e) });
+        
+    });
+
 }
 
 module.exports = { init }
 
 /*
 
-Create new cart item - POST request
+Create new order by by userID - POST request
 
 
-curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"city\":\"batYam\",\"street\":\"Balfur\",\"shippingDate\":\"21/11/2018\",\"visaDigits\":\"4567\", \"cartID\":\"5bf3f1d08081f334487531e1\"}" localhost:6200/api/orders/5bf15b5a7668b92468f010d1
+curl -v -X POST -H "Content-type: application/json" -H "xx-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiNWJmMWFmOWQ4MDUyZTc2NzZjYzIzYjNlIiwiaWF0IjoxNTQyNTY1ODQyfQ.ku55pJMYwwuugNMwUr-PAS14KV4bQJcNoiWHPQdlTi8" -d  "{\"city\":\"batYam\",\"street\":\"Balfur\",\"shippingDate\":\"21/11/2018\",\"visaDigits\":\"4567\"}" localhost:6200/api/orders/5bf15b5a7668b92468f010d1
 
 response :
 
@@ -110,6 +138,27 @@ response :
 < Connection: keep-alive
 <
 {"totalPrice":125,"_id":"5bf521bfc540cf0480742d65","city":"batYam","street":"Balfur","shippingDate":"21/11/2018","visaDigits":"4567","cartID":"5bf3ec1b7278ab0a7ca8f0a3","userID":"5bf15b5a7668b92468f010d1","creationDate":"1542791615150","__v":0}* Connection #0 to host localhost left intact
+
+_____
+
+Get count of orders - GET request
+
+curl -v -X GET localhost:6200/api/count/orders
+
+reponse:
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type, xx-auth
+< Content-Type: text/html; charset=utf-8
+< Content-Length: 13
+< ETag: W/"d-rZUXrye32QAdr5FtUENPEkpYlhQ"
+< Date: Fri, 23 Nov 2018 10:34:03 GMT
+< Connection: keep-alive
+<
+{"counter":1}* Connection #0 to host localhost left intact
 
 _____
 

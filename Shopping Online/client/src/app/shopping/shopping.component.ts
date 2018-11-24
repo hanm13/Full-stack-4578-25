@@ -21,11 +21,11 @@ export class ShoppingComponent implements OnInit {
 
   ngOnInit() {
 
+    this.user.state = 'shopping';
+
   }
 
   searchProductsByName(name) {
-
-    console.log(name);
 
     this.myProductsService.initProductsByName(name);
 

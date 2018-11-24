@@ -30,6 +30,12 @@ export class MyCartComponent implements OnInit {
 
   }
 
+  updateUserState(state) {
+
+    this.user.state = state;
+
+  }
+
   ngOnInit() {
   }
 
