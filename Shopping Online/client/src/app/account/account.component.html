@@ -4,7 +4,7 @@
 
     
     <a class="btn btn-default" *ngIf="user.cartItems && user.cartItems.length > 0" href="javascript:" routerLink="/shopping">Resume Shopping</a>
-    <a class="btn btn-default" *ngIf="user.cartItems && user.cartItems.length == 0" href="javascript:" routerLink="/shopping">Start Shopping</a>
+    <a class="btn btn-default" *ngIf="(user.cartItems && user.cartItems.length == 0 ) || !user.cartItems" href="javascript:" routerLink="/shopping">Start Shopping</a>
 
 
 </div>

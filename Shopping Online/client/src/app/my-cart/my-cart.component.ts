@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/services/user-service.services';
 import { User } from '../shared/models/user.model';
+import { OrdersService } from '../shared/services/orders-service.service';
 
 @Component({
   selector: 'app-my-cart',
@@ -10,10 +11,12 @@ import { User } from '../shared/models/user.model';
 export class MyCartComponent implements OnInit {
 
   user: User;
+  cartItemSearch: any = { cartItems: [] };
 
-  constructor(private myUserService: UserService) {
+  constructor(private myUserService: UserService, private myOrderService: OrdersService) {
 
     this.user = myUserService.currentUser;
+    this.cartItemSearch = this.myOrderService.cartItemSearch;
 
   }
 

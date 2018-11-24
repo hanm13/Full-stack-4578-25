@@ -12,6 +12,7 @@ export class OrdersService {
     ordersCounter: any = { count: 0};
     user: User;
     currentCreatedOrder: any = { order: undefined};
+    cartItemSearch: any = { cartItems: [] };
 
     constructor(private myUserService: UserService, private myHttpClient: HttpClient) {
 
