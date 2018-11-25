@@ -19,7 +19,8 @@
     <div class="d-flex row ml-auto homeFlex">
         
             
-        <app-my-cart></app-my-cart>
+        <app-my-cart *ngIf="user.state == 'shopping' || user.state == 'order'"></app-my-cart>
+        <app-add-edit-product *ngIf="user.state == 'admin'"></app-add-edit-product>
 
         <div class="col-sm-7 flex-grow-0 bg-light homeContainerDiv">
             

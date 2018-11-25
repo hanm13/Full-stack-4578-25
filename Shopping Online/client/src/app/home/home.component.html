@@ -23,23 +23,23 @@
 
                 <div class="notificationInfoContainer">
 
-                    <div class="notificationBlock">
+                    <div class="notificationBlock" *ngIf="user.state != 'admin'">
 
                         <div *ngIf="user.cartItems && user.cartItems.length > 0">
 
-                                You have open cart from date: <span>  {{user.cart.date | date}}</span>
+                            You have open cart from date: <span>  {{user.cart.date | date}}</span>
             
-                            </div>
-                            <div *ngIf="user.orders && user.orders.length > 0">
-            
-                                Your last purchase was on: <span>  {{user.orders[user.orders.length - 1].creationDate | date}}</span>
-            
-                            </div>
-                            <div *ngIf="user.userName != 'Guest' && !user.cartItems && !user.orders">
-            
-                                Welcome to your first purchase!
-            
-                            </div>
+                        </div>
+                        <div *ngIf="user.orders && user.orders.length > 0">
+        
+                            Your last purchase was on: <span>  {{user.orders[user.orders.length - 1].creationDate | date}}</span>
+        
+                        </div>
+                        <div *ngIf="user.userName != 'Guest' && !user.cartItems && !user.orders">
+        
+                            Welcome to your first purchase!
+        
+                        </div>
 
                     </div>
 

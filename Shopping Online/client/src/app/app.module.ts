@@ -21,6 +21,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsNavbarComponent } from './products-navbar/products-navbar.component';
 import { OrderComponent } from './order/order.component';
 import { OrderCreationComponent } from './order-creation/order-creation.component';
+import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
 
 
 const appRoutes: Routes = [
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     ProductsNavbarComponent,
     OrderComponent,
     OrderCreationComponent,
+    AddEditProductComponent,
   ],
   imports: [
     BrowserModule,

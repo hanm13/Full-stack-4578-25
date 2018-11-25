@@ -48,8 +48,6 @@ let init = (app) => {
 
         }).then((userCart)=>{
 
-            console.log("User active cart ID:", userCart._id);
-
             cartItem.CartItemModel.find({"cartID": userCart._id}) // we need the cart items so we can calculate the total price
             .then(products => {
 
@@ -103,8 +101,6 @@ let init = (app) => {
     // Delete order by order ID
 
     app.delete("/api/orders/:q", userMiddleware.middleware, (req, res) =>{
-
-        console.log(req.params.q);
 
         order.OrderModel.deleteOne({_id: req.params.q})
         .then(() => {

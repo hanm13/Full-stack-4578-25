@@ -33,8 +33,6 @@ let init = (app) => {
             cart.CartModel.count({userID: req.body.userID, active:true})
                 .then(count => {
 
-                    console.log(req.body.active);
-
                     if(count > 0 ){
 
                         res.status(400).send("Failed to create new cart, user already have active cart!");
@@ -57,7 +55,6 @@ let init = (app) => {
                 })
                 .catch(err => {
                     
-                    console.log("test3");
                     res.status(400).send(err)
                 });
        
@@ -85,8 +82,6 @@ let init = (app) => {
     // Delete cart by ID
 
     app.delete("/api/carts/:q", userMiddleware.middleware, (req, res) =>{
-
-        console.log(req.params.q);
 
         cart.CartModel.deleteOne({_id: req.params.q})
         .then(() => {

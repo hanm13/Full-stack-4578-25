@@ -13,8 +13,8 @@ import { OrdersService } from '../shared/services/orders-service.service';
 export class OrderCreationComponent implements OnInit {
 
   user: User;
-  orderForm: FormGroup;
   orderAvailableCities: any = {cities: []};
+  orderForm: FormGroup;
   orderFormErrors: any = { errors: []};
 
 
@@ -90,7 +90,7 @@ export class OrderCreationComponent implements OnInit {
       f => f.value && f.value.length > max ? { err: `${label} is max ${max} chars` } : null,
       f => f.value && f.value.length < min ? { err: `${label} is min ${min} chars` } : null
     ]);
-}
+  }
 
   ngOnInit() {
 

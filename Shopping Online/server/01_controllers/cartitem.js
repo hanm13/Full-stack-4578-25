@@ -238,13 +238,10 @@ let init = (app) => {
 
             cartItem.CartItemModel.deleteOne({_id: req.params.q})
             .then(() => {
-
-                console.log("cartID", item.cartID);
     
                 cart.CartModel.findOne({"_id":item.cartID, "active":true})
                 .then(userCart => {
 
-                    console.log(userCart);
 
                     return userCart;
                 })

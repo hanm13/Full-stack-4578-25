@@ -12,6 +12,7 @@ export class ShoppingComponent implements OnInit {
 
   user: User;
 
+
   constructor(private myProductsService: ProductsService, private myUserService: UserService) {
 
     this.user = this.myUserService.currentUser;
@@ -21,13 +22,31 @@ export class ShoppingComponent implements OnInit {
 
   ngOnInit() {
 
-    this.user.state = 'shopping';
+
+    if (this.user.role === 1 || this.user.userName === 'manager') {
+
+      this.user.state = 'admin';
+    } else {
+
+      this.user.state = 'shopping';
+
+    }
+
 
   }
 
   searchProductsByName(name) {
 
-    this.myProductsService.initProductsByName(name);
+    if ( name === '' ) { // if we search for nothing we will reload the regular products;
+
+      this.myProductsService.initProductsFromCategory(this.myProductsService.categoriesList.categories[0]._id);
+
+    } else {
+
+      this.myProductsService.initProductsByName(name);
+
+    }
+
 
   }
 

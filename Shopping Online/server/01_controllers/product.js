@@ -53,8 +53,6 @@ let init = (app) => {
 
     // add product - ONLY CLIENT THAT IS LOGED IN AS A MANAGER CAN ADD A NEW PRODUCT: 
     app.post("/api/products", managerMiddlware.middleware, (req, res) => {
-
-            console.log(req.body);
        
             let newProduct = new product.ProductModel(req.body);
             newProduct.save()
@@ -92,8 +90,6 @@ let init = (app) => {
     });
 
     app.delete("/api/products/:q", managerMiddlware.middleware, (req, res) =>{
-
-        console.log(req.params.q);
 
         product.ProductModel.deleteOne({_id: req.params.q})
         .then(() => {

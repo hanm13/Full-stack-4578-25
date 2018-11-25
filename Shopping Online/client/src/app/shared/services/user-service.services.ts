@@ -36,6 +36,13 @@ export class UserService {
                 this.initUserCart();
                 this.initUserCartItems();
                 this.initUserOrders();
+
+                if (this.currentUser.role === 1 || this.currentUser.userName === 'manager') {
+
+                    this.currentUser.state = 'admin';
+
+                  }
+
             });
     }
 
