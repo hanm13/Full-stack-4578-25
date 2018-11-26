@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../shared/services/products-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Category } from '../shared/models/category.model';
@@ -9,7 +9,7 @@ import { Product } from '../shared/models/product.model';
   templateUrl: './add-edit-product.component.html',
   styleUrls: ['./add-edit-product.component.css']
 })
-export class AddEditProductComponent implements OnInit, AfterContentChecked {
+export class AddEditProductComponent implements OnInit {
 
   productForEdit: any = { product: undefined };
   editAddForm: FormGroup;
@@ -40,6 +40,7 @@ export class AddEditProductComponent implements OnInit, AfterContentChecked {
 
     this.myProductsService.initCategoriesList();
 
+
   }
 
   getFormControl(min, max, label, defaultVal= '') {
@@ -49,24 +50,6 @@ export class AddEditProductComponent implements OnInit, AfterContentChecked {
       f => f.value && f.value.length > max ? { err: `${label} is max ${max} chars` } : null,
       f => f.value && f.value.length < min ? { err: `${label} is min ${min} chars` } : null
     ]);
-  }
-
-  // Respond after Angular checks the content projected into the component.
-  // Called after the ngAfterContentInit() and every subsequent ngDoCheck().
-  // A component-only hook.
-  ngAfterContentChecked(): void {
-
-    // tslint:disable-next-line:max-line-length
-    if ( this.productForEdit.product && this.editAddForm.controls.category && this.editAddForm.controls.category.value !== this.productForEdit.product.categoryId) {
-
-      this.editAddForm.controls.category.setValue(this.productForEdit.product.categoryId || '');
-      this.editAddForm.controls.name.setValue(this.productForEdit.product.name || '');
-      this.editAddForm.controls.price.setValue(this.productForEdit.product.price || 0);
-      this.editAddForm.controls.imageAddress.setValue(this.productForEdit.product.imageAddress || '');
-      this.addMode = false;
-
-    }
-
   }
 
   editAddProduct() {

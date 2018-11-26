@@ -24,8 +24,8 @@ export class OrderCreationComponent implements OnInit {
 
     const orderFormConfig = {
 
-      city: this.getFormControl(2, 15, 'City'),
-      street: this.getFormControl(2, 15, 'Street'),
+      city: this.getFormControl(2, 25, 'City'),
+      street: this.getFormControl(2, 25, 'Street'),
       shippingDate: new FormControl(''),
       visaDigits: this.getFormControl(4, 4, 'Visa Digits'),
 

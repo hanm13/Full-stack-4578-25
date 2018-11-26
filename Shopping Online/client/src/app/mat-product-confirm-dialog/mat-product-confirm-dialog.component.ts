@@ -1,42 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../shared/services/products-service.service';
 import { UserService } from '../shared/services/user-service.services';
-import { User } from '../shared/models/user.model';
+import { ProductsService } from '../shared/services/products-service.service';
 import { MatDialog } from '@angular/material';
-import { MatProductConfirmDialogComponent } from '../mat-product-confirm-dialog/mat-product-confirm-dialog.component';
+import { User } from '../shared/models/user.model';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-mat-product-confirm-dialog',
+  templateUrl: './mat-product-confirm-dialog.component.html',
+  styleUrls: ['./mat-product-confirm-dialog.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class MatProductConfirmDialogComponent implements OnInit {
 
-  selectedProductsByCategory: any = {products: []};
+  ProductQuantityValue: Number;
   selectedProductForCart: any = {product: undefined};
   user: User;
 
-  constructor( private myProductsService: ProductsService, private myUserService: UserService, private matdialog: MatDialog) {
-
-    this.selectedProductsByCategory = myProductsService.selectedProductsByCategory;
+  // tslint:disable-next-line:max-line-length
+  constructor(private myProductsService: ProductsService, private myUserService: UserService, private matdialog: MatDialog ) {
+    this.ProductQuantityValue = 1;
     this.selectedProductForCart = myProductsService.selectedProductForCart;
     this.user = this.myUserService.currentUser;
 
+   }
+
+  ngOnInit() {
+
   }
 
-  updateSelectedProductForCart(product) {
-
+  closeDialog() {
     this.matdialog.closeAll();
-    this.selectedProductForCart.product = product;
-    this.matdialog.open(MatProductConfirmDialogComponent, {
-      //   width: '200px',
-      //   height: '200px',
-        disableClose: false
-    });
+  }
+
+  plusOneQuantity (quantity) {
+    quantity++;
+    this.ProductQuantityValue = quantity;
+  }
+
+  minusOneQuantity (quantity) {
+    if (quantity > 1) {
+      quantity--;
+      this.ProductQuantityValue = quantity;
+    }
+  }
+
+  updateQuantity (quantity) {
+    this.ProductQuantityValue = quantity;
   }
 
   addItemToCartItems(product, amount) {
 
+    this.matdialog.closeAll(); // Must be first!
     this.selectedProductForCart.product = null;
 
     const shouldUpdate = {should: false, cartItemID: undefined};
@@ -64,17 +77,6 @@ export class ProductsComponent implements OnInit {
       this.myUserService.addCartItem(product, amount);
 
     }
-
-
-  }
-
-  editProduct(product) {
-
-    this.myProductsService.updateProductForEdit(product);
-
-  }
-
-  ngOnInit() {
 
   }
 

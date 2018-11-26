@@ -14,4 +14,5 @@ export interface User {
     cartItems?: any;
     state?: String;
     orders?: any;
+    tempCartItems?: any;
 }

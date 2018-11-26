@@ -14,7 +14,7 @@
         <div class="successDiv">
 
             <p class="text-center">Your purchase was successful!</p>
-            <p class="text-center">Download your receipt by clicking <a href="javascript:">HERE</a></p>
+            <p class="text-center">Download your receipt by clicking <a href="javascript:" (click)="getLastOrderFile()" >HERE</a></p>
             <button class="btn text-center btn-success" (click)="resetCurrentUserOrder()" [routerLink]="['/shopping']" routerLinkActive="router-link-active" >Confirm</button>
 
         </div>

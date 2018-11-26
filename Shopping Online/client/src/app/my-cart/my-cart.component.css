@@ -13,7 +13,7 @@ td{
 }
 
 .tableContainer{
-    min-height: 520px;
+    height: 480px;
     overflow-y: scroll;
     border-bottom: 1px solid black;
     margin-top: 10px;
@@ -22,7 +22,7 @@ td{
 .myCartContainer{
     resize: both;
     overflow: auto;
-    height: 680px;
+    height: 650px
 }
 
 span{

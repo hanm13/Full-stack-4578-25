@@ -1,5 +1,5 @@
 
-var Sha256: any = {};  // Sha256 namespace
+let Sha256: any = {};  // Sha256 namespace
 
 /**
  * Generates SHA-256 hash of string
@@ -15,7 +15,7 @@ Sha256.hash = function (msg, utf8encode) {
     if (utf8encode) msg = Utf8.encode(msg);
 
     // constants [§4.2.2]
-    var K = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    let K = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
         0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
         0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
@@ -24,20 +24,20 @@ Sha256.hash = function (msg, utf8encode) {
         0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2];
     // initial hash value [§5.3.1]
-    var H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+    let H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
 
     // PREPROCESSING 
 
     msg += String.fromCharCode(0x80);  // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
 
     // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]
-    var l = msg.length / 4 + 2;  // length (in 32-bit integers) of msg + ‘1’ + appended length
-    var N = Math.ceil(l / 16);   // number of 16-integer-blocks required to hold 'l' ints
-    var M = new Array(N);
+    let l = msg.length / 4 + 2;  // length (in 32-bit integers) of msg + ‘1’ + appended length
+    let N = Math.ceil(l / 16);   // number of 16-integer-blocks required to hold 'l' ints
+    let M = new Array(N);
 
-    for (var i = 0; i < N; i++) {
+    for (let i = 0; i < N; i++) {
         M[i] = new Array(16);
-        for (var j = 0; j < 16; j++) {  // encode 4 chars per integer, big-endian encoding
+        for (let j = 0; j < 16; j++) {  // encode 4 chars per integer, big-endian encoding
             M[i][j] = (msg.charCodeAt(i * 64 + j * 4) << 24) | (msg.charCodeAt(i * 64 + j * 4 + 1) << 16) |
                 (msg.charCodeAt(i * 64 + j * 4 + 2) << 8) | (msg.charCodeAt(i * 64 + j * 4 + 3));
         } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
@@ -51,20 +51,20 @@ Sha256.hash = function (msg, utf8encode) {
 
     // HASH COMPUTATION [§6.1.2]
 
-    var W = new Array(64); var a, b, c, d, e, f, g, h;
-    for (var i = 0; i < N; i++) {
+    let W = new Array(64); let a, b, c, d, e, f, g, h;
+    for (let i = 0; i < N; i++) {
 
         // 1 - prepare message schedule 'W'
-        for (var t = 0; t < 16; t++) W[t] = M[i][t];
-        for (var t = 16; t < 64; t++) W[t] = (Sha256.sigma1(W[t - 2]) + W[t - 7] + Sha256.sigma0(W[t - 15]) + W[t - 16]) & 0xffffffff;
+        for (let t = 0; t < 16; t++) W[t] = M[i][t];
+        for (let t = 16; t < 64; t++) W[t] = (Sha256.sigma1(W[t - 2]) + W[t - 7] + Sha256.sigma0(W[t - 15]) + W[t - 16]) & 0xffffffff;
 
         // 2 - initialise working variables a, b, c, d, e, f, g, h with previous hash value
         a = H[0]; b = H[1]; c = H[2]; d = H[3]; e = H[4]; f = H[5]; g = H[6]; h = H[7];
 
         // 3 - main loop (note 'addition modulo 2^32')
-        for (var t = 0; t < 64; t++) {
-            var T1 = h + Sha256.Sigma1(e) + Sha256.Ch(e, f, g) + K[t] + W[t];
-            var T2 = Sha256.Sigma0(a) + Sha256.Maj(a, b, c);
+        for (let t = 0; t < 64; t++) {
+            let T1 = h + Sha256.Sigma1(e) + Sha256.Ch(e, f, g) + K[t] + W[t];
+            let T2 = Sha256.Sigma0(a) + Sha256.Maj(a, b, c);
             h = g;
             g = f;
             f = e;
@@ -103,8 +103,8 @@ Sha256.Maj = function (x, y, z) { return (x & y) ^ (x & z) ^ (y & z); }
 //   in IE returns signed numbers when used on full words)
 //
 Sha256.toHexStr = function (n) {
-    var s = "", v;
-    for (var i = 7; i >= 0; i--) { v = (n >>> (i * 4)) & 0xf; s += v.toString(16); }
+    let s = "", v;
+    for (let i = 7; i >= 0; i--) { v = (n >>> (i * 4)) & 0xf; s += v.toString(16); }
     return s;
 }
 
@@ -114,7 +114,7 @@ Sha256.toHexStr = function (n) {
 /*              single-byte character encoding (c) Chris Veness 2002-2010                         */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-var Utf8: any = {};  // Utf8 namespace
+let Utf8: any = {};  // Utf8 namespace
 
 /**
  * Encode multi-byte Unicode string into utf-8 multiple single-byte characters 
@@ -128,17 +128,17 @@ var Utf8: any = {};  // Utf8 namespace
 Utf8.encode = function (strUni) {
     // use regular expressions & String.replace callback function for better efficiency 
     // than procedural approaches
-    var strUtf = strUni.replace(
+    let strUtf = strUni.replace(
         /[\u0080-\u07ff]/g,  // U+0080 - U+07FF => 2 bytes 110yyyyy, 10zzzzzz
         function (c) {
-            var cc = c.charCodeAt(0);
+            let cc = c.charCodeAt(0);
             return String.fromCharCode(0xc0 | cc >> 6, 0x80 | cc & 0x3f);
         }
     );
     strUtf = strUtf.replace(
         /[\u0800-\uffff]/g,  // U+0800 - U+FFFF => 3 bytes 1110xxxx, 10yyyyyy, 10zzzzzz
         function (c) {
-            var cc = c.charCodeAt(0);
+            let cc = c.charCodeAt(0);
             return String.fromCharCode(0xe0 | cc >> 12, 0x80 | cc >> 6 & 0x3F, 0x80 | cc & 0x3f);
         }
     );
@@ -153,17 +153,17 @@ Utf8.encode = function (strUni) {
  */
 Utf8.decode = function (strUtf) {
     // note: decode 3-byte chars first as decoded 2-byte strings could appear to be 3-byte char!
-    var strUni = strUtf.replace(
+    let strUni = strUtf.replace(
         /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g,  // 3-byte chars
         function (c) {  // (note parentheses for precence)
-            var cc = ((c.charCodeAt(0) & 0x0f) << 12) | ((c.charCodeAt(1) & 0x3f) << 6) | (c.charCodeAt(2) & 0x3f);
+            let cc = ((c.charCodeAt(0) & 0x0f) << 12) | ((c.charCodeAt(1) & 0x3f) << 6) | (c.charCodeAt(2) & 0x3f);
             return String.fromCharCode(cc);
         }
     );
     strUni = strUni.replace(
         /[\u00c0-\u00df][\u0080-\u00bf]/g,                 // 2-byte chars
         function (c) {  // (note parentheses for precence)
-            var cc = (c.charCodeAt(0) & 0x1f) << 6 | c.charCodeAt(1) & 0x3f;
+            let cc = (c.charCodeAt(0) & 0x1f) << 6 | c.charCodeAt(1) & 0x3f;
             return String.fromCharCode(cc);
         }
     );

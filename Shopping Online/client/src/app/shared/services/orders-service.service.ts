@@ -42,6 +42,7 @@ export class OrdersService {
         .subscribe((resp: any) => {
 
             this.user.cart = undefined;
+            this.user.tempCartItems = {...this.user.cartItems};
             this.user.cartItems = undefined;
             this.currentCreatedOrder.order = newOrderInfo;
             this.user.orders = <Order[]>resp.orders;

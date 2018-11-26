@@ -1,0 +1,39 @@
+
+<mat-card class="main-card" *ngIf="selectedProductForCart.product">
+	<mat-card-header>
+		<mat-card-title><strong>Product Details:</strong></mat-card-title>
+    <mat-icon (click)="closeDialog()" id ="close-icon"><span class="glyphicon glyphicon-remove"></span></mat-icon>
+  </mat-card-header>
+  <hr/>
+  <mat-card-content>
+
+      <div class="product_name_inDialog">
+        <label>Product Name:</label> {{selectedProductForCart.product?.name}}
+      </div>
+
+      <div class="product_price_inDialog">
+        <label>Price:</label> ${{selectedProductForCart.product?.price}}
+      </div>
+
+
+      <div class="product_image_inDialog_container">
+        <img class="product_image_inDialog" [src]="selectedProductForCart.product?.imageAddress">
+      </div>
+
+      <div class="product_total_price_inDialog">
+        <p>Total Price:{{selectedProductForCart.product.price * ProductQuantityValue}}$</p>
+      </div>
+
+      <div class="container_of_quantities">
+        <input #quantity class="input_quantity_of_products" (keyup)="updateQuantity(quantity.value)" [value] = "ProductQuantityValue">
+        <button class="plus_product" (click) = "plusOneQuantity(quantity.value)" >+</button>
+        <button class="minus_product" (click) = "minusOneQuantity(quantity.value)" >-</button>
+        <label class="per_unit_label">Units</label>
+      </div>
+
+      <div class="button_add_inDialog">
+        <button mat-button class="btn btn-primary"  (click)="addItemToCartItems(selectedProductForCart.product,quantity.value)">ADD</button>
+      </div>
+  </mat-card-content>
+
+</mat-card>

@@ -22,7 +22,9 @@ import { ProductsNavbarComponent } from './products-navbar/products-navbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderCreationComponent } from './order-creation/order-creation.component';
 import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
-
+import { MatProductConfirmDialogComponent } from './mat-product-confirm-dialog/mat-product-confirm-dialog.component';
+import { MatDialogModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
 
@@ -57,15 +59,23 @@ const appRoutes: Routes = [
     OrderComponent,
     OrderCreationComponent,
     AddEditProductComponent,
+    MatProductConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatIconModule
   ],
   providers: [ProductsService, UserService, OrdersService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MatProductConfirmDialogComponent]
 })
 export class AppModule { }
