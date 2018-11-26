@@ -35,39 +35,6 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  addItemToCartItems(product, amount) {
-
-    this.selectedProductForCart.product = null;
-
-    const shouldUpdate = {should: false, cartItemID: undefined};
-
-    // we check if we already have the item inside our cart items and then if we have we need to update the cart item with the ammount.
-    for (const key in this.user.cartItems) {
-      if (this.user.cartItems.hasOwnProperty(key)) {
-        const element = this.user.cartItems[key];
-        if ( element.productID === product._id) {
-
-          shouldUpdate.should = true;
-          shouldUpdate.cartItemID = element._id;
-
-        }
-
-      }
-    }
-
-    if (shouldUpdate.should) {
-
-      this.myUserService.updateCartItem(shouldUpdate.cartItemID, amount);
-
-    } else {
-
-      this.myUserService.addCartItem(product, amount);
-
-    }
-
-
-  }
-
   editProduct(product) {
 
     this.myProductsService.updateProductForEdit(product);

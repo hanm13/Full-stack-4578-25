@@ -11,16 +11,19 @@ import { Product } from '../shared/models/product.model';
 })
 export class AddEditProductComponent implements OnInit {
 
-  productForEdit: any = { product: undefined };
+  productForEdit: any = { product: {name: '', price: 0 , imageAddress: '', categoryId: '' } };
   editAddForm: FormGroup;
   editAddFormErrors: any = { errors: []};
   categories: any = {categories: []};
-  addMode = false;
+  addMode = true;
 
 
   constructor(private myProductsService: ProductsService) {
 
     this.productForEdit = myProductsService.productForEdit;
+
+    this.resetProductForEditObj();
+
     this.categories = myProductsService.categoriesList;
 
     const editAddFormConfig = {
@@ -65,7 +68,7 @@ export class AddEditProductComponent implements OnInit {
 
     };
 
-    if (this.productForEdit.product) {
+    if (this.productForEdit.product._id) {
 
       this.myProductsService.editProduct(formProduct);
 
@@ -79,14 +82,27 @@ export class AddEditProductComponent implements OnInit {
 
   }
 
+  resetProductForEditObj() {
+    this.productForEdit.product = {};
+    this.productForEdit.product.name = '';
+    this.productForEdit.product.price = 0;
+    this.productForEdit.product.categoryId = '';
+    this.productForEdit.product.imageAddress = '';
+    this.productForEdit.product._id = undefined;
+
+  }
+
   updateAddMode() {
 
     this.addMode = !this.addMode;
-    if (this.addMode === true && this.productForEdit.product) {
 
-      this.productForEdit.product = undefined;
-      this.editAddForm.reset();
+    if (this.productForEdit.product._id) {
+      this.addMode = true;
     }
+
+    this.resetProductForEditObj();
+
+    this.editAddForm.reset();
 
 }
 
