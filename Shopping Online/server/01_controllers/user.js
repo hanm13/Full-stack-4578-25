@@ -93,34 +93,6 @@ let init = (app) => {
         }
     });
 
-    /*// update user cart
-    app.put("/api/users", userMiddlware, (req, res) => {
-
-        user.UserModel.findOne({
-                "_id": req.params._id
-            })
-            .then(currentUser => {
-                
-                let tempCart = currentUser.cart || [];
-
-                currentUser.cart = (req.body.isAddMode)? 
-                                        [...tempCart, req.body.productId]:
-                                        tempCart.filter(el=>el!=req.body.productId); 
-                    
-                currentUser.save();
-      
-                if(currentUser.cart){
-                    let promiseArray=currentUser.cart.map(el=>product.ProductModel.findOne({"_id":el}));
-                    Promise.all(promiseArray)
-                    .then(list => {res.status(200).send(list)})
-                    .catch((e) => { console.log(e) });
-                }
-                
-            })
-            .catch((e) => {
-                res.status(401).send();
-            });
-    });*/
 }
 
 module.exports = {

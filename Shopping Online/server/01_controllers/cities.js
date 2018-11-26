@@ -31,7 +31,7 @@ module.exports = { init }
 
 /*
 
-Cities - Get Request
+Get Cities - Get Request
 
 CURL : curl -v -X GET localhost:6200/api/cities
 
