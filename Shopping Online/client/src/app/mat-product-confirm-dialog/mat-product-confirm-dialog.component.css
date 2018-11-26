@@ -123,3 +123,13 @@
 #close-icon:hover{
 cursor: pointer;
 }
+
+button > span{
+
+    right: 2px;
+
+}
+
+.mat-card-header-text {
+    margin: 0 !important;
+}

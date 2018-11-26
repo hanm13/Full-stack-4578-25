@@ -3,6 +3,8 @@ import { UserService } from '../shared/services/user-service.services';
 import { User } from '../shared/models/user.model';
 import { FormGroup, FormControl, ValidatorFn } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
+import { MatLoginDialogComponent } from '../mat-login-dialog/mat-login-dialog.component';
 
 @Component({
   selector: 'app-account',
@@ -19,7 +21,7 @@ export class AccountComponent implements OnInit {
   registerAvailableCities: any = {cities: []};
   formRegisterErrors = { 'msg': [] };
 
-  constructor(private myUserService: UserService, private myHttpClient: HttpClient) {
+  constructor(private myUserService: UserService, private myHttpClient: HttpClient, private matdialog: MatDialog) {
 
     this.user = this.myUserService.currentUser;
 
@@ -169,9 +171,13 @@ export class AccountComponent implements OnInit {
     this.myUserService.loginUser({
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.userPassword
+    }, () => {
+      this.matdialog.closeAll();
+      this.matdialog.open(MatLoginDialogComponent, {
+          disableClose: false
+      });
     });
     this.loginForm.reset();
-
 
   }
   registerUser() {

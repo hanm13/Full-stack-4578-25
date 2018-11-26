@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { hash } from './sha-convertor.service';
-import { OrdersService } from './orders-service.service';
-
 // מאפשר לשירות הנוכחי להשתמש בתוכו בשירותים אחרים
 @Injectable()
 export class UserService {
@@ -13,7 +11,7 @@ export class UserService {
     constructor(private myHttpClient: HttpClient) {}
 
 
-    loginUser(loginUser: User): void {
+    loginUser(loginUser: User, callback?): void {
 
         const apiUrl = `http://localhost:6200/api/users`;
 
@@ -39,9 +37,11 @@ export class UserService {
 
                 if (this.currentUser.role === 1 || this.currentUser.userName === 'manager') {
 
-                    this.currentUser.state = 'admin';
+                this.currentUser.state = 'admin';
 
-                  }
+                }
+
+                callback();
 
             });
     }

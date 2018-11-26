@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   productsCounter: any = {count: 0 };
   user: User;
 
+  // tslint:disable-next-line:max-line-length
   constructor(private myProductsService: ProductsService, private myOrdersService: OrdersService, private myUserService: UserService) {
 
     this.productsCounter = this.myProductsService.productsCounter;

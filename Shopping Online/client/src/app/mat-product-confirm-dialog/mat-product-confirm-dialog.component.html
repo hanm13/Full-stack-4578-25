@@ -8,11 +8,11 @@
   <mat-card-content>
 
       <div class="product_name_inDialog">
-        <label>Product Name:</label> {{selectedProductForCart.product?.name}}
+        <label>Product Name: </label> <span>{{selectedProductForCart.product?.name}}</span>
       </div>
 
       <div class="product_price_inDialog">
-        <label>Price:</label> ${{selectedProductForCart.product?.price}}
+        <label>Price: </label><span>{{selectedProductForCart.product?.price}}$</span>
       </div>
 
 
@@ -21,13 +21,13 @@
       </div>
 
       <div class="product_total_price_inDialog">
-        <p>Total Price:{{selectedProductForCart.product.price * ProductQuantityValue}}$</p>
+        <label>Total Price: </label><span>{{selectedProductForCart.product.price * ProductQuantityValue}}$</span>
       </div>
 
       <div class="container_of_quantities">
         <input #quantity class="input_quantity_of_products" (keyup)="updateQuantity(quantity.value)" [value] = "ProductQuantityValue">
-        <button class="plus_product" (click) = "plusOneQuantity(quantity.value)" >+</button>
-        <button class="minus_product" (click) = "minusOneQuantity(quantity.value)" >-</button>
+        <button class="plus_product btn-primary" (click) = "plusOneQuantity(quantity.value)" ><span class="glyphicon glyphicon-plus"></span></button>
+        <button class="minus_product btn-primary" (click) = "minusOneQuantity(quantity.value)" ><span class="glyphicon glyphicon-minus"></span></button>
         <label class="per_unit_label">Units</label>
       </div>
 

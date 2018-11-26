@@ -23,6 +23,9 @@ import { OrderComponent } from './order/order.component';
 import { OrderCreationComponent } from './order-creation/order-creation.component';
 import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
 import { MatProductConfirmDialogComponent } from './mat-product-confirm-dialog/mat-product-confirm-dialog.component';
+import { MatLoginDialogComponent } from './mat-login-dialog/mat-login-dialog.component';
+
+
 import { MatDialogModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -60,6 +63,7 @@ const appRoutes: Routes = [
     OrderCreationComponent,
     AddEditProductComponent,
     MatProductConfirmDialogComponent,
+    MatLoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +80,6 @@ const appRoutes: Routes = [
   ],
   providers: [ProductsService, UserService, OrdersService],
   bootstrap: [AppComponent],
-  entryComponents: [MatProductConfirmDialogComponent]
+  entryComponents: [MatProductConfirmDialogComponent, MatLoginDialogComponent]
 })
 export class AppModule { }
