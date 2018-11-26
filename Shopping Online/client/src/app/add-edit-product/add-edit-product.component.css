@@ -41,7 +41,7 @@ select{
 #addProductAnchor{
 
  width: 25px;
-
+ margin-top: 5px;
 }
 
 #addProductSpan{
