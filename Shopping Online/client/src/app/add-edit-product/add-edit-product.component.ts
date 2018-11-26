@@ -15,7 +15,7 @@ export class AddEditProductComponent implements OnInit {
   editAddForm: FormGroup;
   editAddFormErrors: any = { errors: []};
   categories: any = {categories: []};
-  addMode = true;
+  addMode = false;
 
 
   constructor(private myProductsService: ProductsService) {
@@ -70,11 +70,11 @@ export class AddEditProductComponent implements OnInit {
 
     if (this.productForEdit.product._id) {
 
-      this.myProductsService.editProduct(formProduct);
+      this.myProductsService.editProduct(formProduct, formProduct.categoryId);
 
     } else {
 
-      this.myProductsService.addProduct(formProduct);
+      this.myProductsService.addProduct(formProduct, formProduct.categoryId);
 
     }
 

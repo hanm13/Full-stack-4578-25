@@ -84,7 +84,7 @@ export class ProductsService {
 
     }
 
-    editProduct(productInfo) {
+    editProduct(productInfo, categoryId= this.categoriesList.categories[0]._id) {
 
         this.myHttpClient.put(`http://localhost:6200/api/products/${this.productForEdit.product._id}`, productInfo, {
             headers: {
@@ -94,14 +94,13 @@ export class ProductsService {
         })
         .subscribe((resp: any) => {
 
-            console.log(resp);
-            this.initProductsFromCategory(this.categoriesList.categories[0]._id);
+            this.initProductsFromCategory(categoryId);
 
         });
 
     }
 
-    addProduct(productInfo) {
+    addProduct(productInfo, categoryId= this.categoriesList.categories[0]._id) {
 
         this.myHttpClient.post(`http://localhost:6200/api/products/`, productInfo, {
             headers: {
@@ -111,7 +110,7 @@ export class ProductsService {
         })
         .subscribe((resp: any) => {
 
-            this.initProductsFromCategory(this.categoriesList.categories[0]._id);
+            this.initProductsFromCategory(categoryId);
             this.initProductsCounter();
 
         });
