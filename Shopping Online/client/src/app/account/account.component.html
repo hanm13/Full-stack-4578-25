@@ -31,6 +31,7 @@
                 <input class="form-control btn btn-default" type="submit" value="Login" (click)="loginUser()" />
 
             </form>
+            <p>{{loginError.error}}</p>
             <div class="change-mode">
                 <button class="float-right btn btn-default" (click)="changeState('register1')">Go to register</button>
             </div>

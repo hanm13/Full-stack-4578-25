@@ -7,6 +7,7 @@ import { hash } from './sha-convertor.service';
 export class UserService {
     currentUser: User = { firstName: 'Guest', userName: 'Guest', token: undefined, cart: undefined, cartItems: undefined,
      state: 'shopping', orders: undefined};
+     loginError: any = {error: '' };
 
     constructor(private myHttpClient: HttpClient) {}
 
@@ -43,7 +44,11 @@ export class UserService {
 
                 callback();
 
-            });
+            }, (err => {
+
+                this.loginError.error = 'Incorrect details!';
+
+            }));
     }
 
     calculateTotalCartItemsPrice(cartItems) {

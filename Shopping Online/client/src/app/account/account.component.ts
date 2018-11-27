@@ -20,10 +20,13 @@ export class AccountComponent implements OnInit {
   user: User;
   registerAvailableCities: any = {cities: []};
   formRegisterErrors = { 'msg': [] };
+  loginError: any = {error: '' };
+
 
   constructor(private myUserService: UserService, private myHttpClient: HttpClient, private matdialog: MatDialog) {
 
     this.user = this.myUserService.currentUser;
+    this.loginError = this.myUserService.loginError;
 
     const loginGroupConfig = {
       userName: this.getFormControl(2, 15, 'User name'),
