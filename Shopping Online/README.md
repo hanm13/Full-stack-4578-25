@@ -37,6 +37,8 @@
 
  nodemon ./server/01_controllers/index.js
 
+ Create admin user: Create user with the username: manager or set user role to 1.
+
 ***
 
 ### Home Page:
