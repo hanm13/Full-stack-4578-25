@@ -1,7 +1,10 @@
-# The School
-* A project that was developed with PHP language and MVC architecture pattern.
+# Shopping Online
+* Online shopping store
 
-* Management system of students, courses and school staff.
+* Login & Register for customers.
+* Products list and user cart items
+* Create order and get receipt as file
+* Admin: Create and edit products
 
 ## topics:
 
@@ -9,23 +12,30 @@
 * HTML5 Structre
 * Bootstrap Design
 
+### Angular
+
 ### NodeJS :
 
 1. Mogoose(MongoDB)
 2. Express(Server)
 
+### MongoDB
+
+- Design & Create collections (user, products, cart, cartItems, orders, cities, categories )
+
+
 ***
 
 ## Requirements:
 
-1. NPM
+1. NPM: jsonwebtoken, express, mongoose, body-parser, nodemon
 2. NodeJS, Angular.
 
 
 
 ## How to run:
 
-
+ nodemon ./server/01_controllers/index.js
 
 ***
 
