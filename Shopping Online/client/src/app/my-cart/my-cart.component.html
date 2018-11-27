@@ -26,16 +26,16 @@
               <td><a *ngIf="user.state === 'shopping'" (click)="removeCartItem(cartitem._id)" class="text-dark" href="javascript:"><span class="glyphicon glyphicon-remove"></span></a> <img [src]="cartitem.imageAddress" width="100"></td>
               
               <div [ngSwitch]="cartItemSearch.cartItems.includes(cartitem.name) && user.state === 'order'">
-                  <td *ngSwitchCase = "true" ><span class="productSpan bg-warning">{{cartitem.name}}</span></td>
-                  <td *ngSwitchCase = "false" ><span class="productSpan">{{cartitem.name}}</span></td>
+                  <td *ngSwitchCase = "true" ><span class="productSpan bg-warning cartItemNameTD">{{cartitem.name}}</span></td>
+                  <td *ngSwitchCase = "false" ><span class="productSpan cartItemNameTD">{{cartitem.name}}</span></td>
 
               </div>
 
 
 
-              <td><span class="productSpan">{{cartitem.amount}}</span></td>
+              <td class="cartItemAmountTD"><span class="productSpan">{{cartitem.amount}}</span></td>
               <td><span class="productSpan">{{cartitem.priceSingle}}$</span></td>
-              <td><span class="productSpan">{{cartitem.totalPrice}}$</span></td>
+              <td class="cartItemTotalPriceTD"><span class="productSpan ">{{cartitem.totalPrice}}$</span></td>
     
             </tr>
     

@@ -77,3 +77,11 @@ span{
 .btnToShop{
     margin-bottom: 5px;
 }
+
+.cartItemNameTD{
+
+    display: block;
+    width: 150px;
+    word-wrap: break-word;
+
+}

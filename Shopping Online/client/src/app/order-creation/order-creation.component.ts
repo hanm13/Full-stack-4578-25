@@ -16,7 +16,7 @@ export class OrderCreationComponent implements OnInit {
   orderAvailableCities: any = {cities: []};
   orderForm: FormGroup;
   orderFormErrors: any = { errors: []};
-
+  today: String;
 
   constructor(private myUserService: UserService, private myOrderService: OrdersService, private myHttpClient: HttpClient) {
 
@@ -26,12 +26,31 @@ export class OrderCreationComponent implements OnInit {
 
       city: this.getFormControl(2, 25, 'City'),
       street: this.getFormControl(2, 25, 'Street'),
-      shippingDate: new FormControl(''),
+      shippingDate: new FormControl('', [
+        f => (!f.value ?  { err: `` } : null),
+        f => (!f.value && !f.pristine ? { err: `Date is required` } : null),
+      ]),
       visaDigits: this.getFormControl(4, 4, 'Visa Digits'),
 
     };
 
     this.orderForm = new FormGroup(orderFormConfig);
+
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    this.today = yyyy + '-' + mm + '-' + dd;
+
   }
 
   initOrderCities() {

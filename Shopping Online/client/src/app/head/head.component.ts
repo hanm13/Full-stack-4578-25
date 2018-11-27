@@ -9,8 +9,10 @@ import { User } from '../shared/models/user.model';
 })
 export class HeadComponent implements OnInit {
   user: User;
+  store: { phone: string; email: string; };
   constructor(private myUserService: UserService) {
     this.user = this.myUserService.currentUser;
+    this.store = {phone: '03-974-7412', email: 'online@shopping.test.com'}
   }
 
   logout() {

@@ -25,7 +25,7 @@
       </div>
 
       <div class="container_of_quantities">
-        <input #quantity class="input_quantity_of_products" (keyup)="updateQuantity(quantity.value)" [value] = "ProductQuantityValue">
+        <input type="number" #quantity class="input_quantity_of_products" (keyup)="updateQuantity(quantity.value)" [max]="maxProducts" [value] = "ProductQuantityValue">
         <button class="plus_product btn-primary" (click) = "plusOneQuantity(quantity.value)" ><span class="glyphicon glyphicon-plus"></span></button>
         <button class="minus_product btn-primary" (click) = "minusOneQuantity(quantity.value)" ><span class="glyphicon glyphicon-minus"></span></button>
         <label class="per_unit_label">Units</label>

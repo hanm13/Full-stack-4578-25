@@ -14,6 +14,7 @@ export class MatProductConfirmDialogComponent implements OnInit {
   ProductQuantityValue: Number;
   selectedProductForCart: any = {product: undefined};
   user: User;
+  maxProducts: Number = 15;
 
   // tslint:disable-next-line:max-line-length
   constructor(private myProductsService: ProductsService, private myUserService: UserService, private matdialog: MatDialog ) {
@@ -33,6 +34,7 @@ export class MatProductConfirmDialogComponent implements OnInit {
 
   plusOneQuantity (quantity) {
     quantity++;
+    if ( quantity > this.maxProducts ) { return; }
     this.ProductQuantityValue = quantity;
   }
 
@@ -44,6 +46,10 @@ export class MatProductConfirmDialogComponent implements OnInit {
   }
 
   updateQuantity (quantity) {
+    if ( quantity > this.maxProducts ) {
+      this.ProductQuantityValue = this.maxProducts;
+      return;
+    }
     this.ProductQuantityValue = quantity;
   }
 

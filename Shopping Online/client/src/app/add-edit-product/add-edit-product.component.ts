@@ -28,7 +28,7 @@ export class AddEditProductComponent implements OnInit {
 
     const editAddFormConfig = {
 
-      name: this.getFormControl(2, 15, 'Name'),
+      name: this.getFormControl(2, 99, 'Name'),
       price: this.getFormControl(1, 999999, 'Price'),
       imageAddress: this.getFormControl(18, 999999, 'Image Address(/assets/images/name.png)'),
       category: this.getFormControl(1, 99, 'Category'),

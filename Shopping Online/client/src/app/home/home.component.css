@@ -35,3 +35,13 @@ h1{
     margin: 5px;
 
 }
+
+.customerServiceBadge{
+    text-align: center;
+    margin-top: 50px;
+}
+
+#shopOnlineImg{
+    top: 5px;
+    position: relative;
+}
