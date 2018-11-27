@@ -3,6 +3,12 @@ const managerMiddlware = require('./middlewares/manager');
 
 let init = (app) => {
 
+    category.CategoryModel.count({})
+    .then(counter=>{
+        if(!counter){
+            category.CategoryModel.insertMany(require("./../00_models/categories.json")) // will insert products by default
+        }
+    });
 
     // Get categories - ALL - EVERY CLIENT CAN ACCESS: 
     app.get("/api/categories", (req, res) => {
