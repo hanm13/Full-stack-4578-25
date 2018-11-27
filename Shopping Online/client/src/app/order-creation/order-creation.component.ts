@@ -37,8 +37,8 @@ export class OrderCreationComponent implements OnInit {
     this.orderForm = new FormGroup(orderFormConfig);
 
     const today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1; // January is 0!
+    let dd: any = today.getDate();
+    let mm: any = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
 
     if (dd < 10) {
