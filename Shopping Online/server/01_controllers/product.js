@@ -98,7 +98,6 @@ module.exports = { init }
 
 /*
 
-
 If we dont have products we will use the template(products.json) and insert test item to the products collection.
 
 Get all products - Get Request
