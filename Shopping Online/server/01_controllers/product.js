@@ -10,17 +10,9 @@ let init = (app) => {
 
         let regex= new RegExp(req.params.q || "a" ,"i");
 
-        product.ProductModel.count({})
-        .then(counter=>{
-            if(!counter){
-                product.ProductModel.insertMany(require("./../00_models/products.json")) // will insert products by default
-            }
-
-            product.ProductModel.find({"name":regex})
-            .then(products => {
-                res.status(200).send(JSON.stringify({"items":products}));
-            })
-            .catch((e) => { res.status(400).send(e) });
+        product.ProductModel.find({"name":regex})
+        .then(products => {
+            res.status(200).send(JSON.stringify({"items":products}));
         })
         .catch((e) => { res.status(400).send(e) });
        
